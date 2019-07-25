@@ -39,6 +39,9 @@ repositories {
     maven { url "https://dl.bintray.com/ethereum/maven/" }
     maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
     mavenCentral()
+    flatDir {
+        dirs 'libs'
+    }
 }
 
 dependencies {
@@ -50,8 +53,12 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
-  compile 'org.fisco-bcos:web3sdk:2.0.5'
+    // https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter
+    compile group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '2.1.0'
+    compile 'org.fisco-bcos:web3sdk:2.0.5'
+    // https://mvnrepository.com/artifact/mysql/mysql-connector-java
+    compile group: 'mysql', name: 'mysql-connector-java', version: '6.0.4'
+    compile name: 'bac'
 
 }
 

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 用于用户表的查询语句-->
+<mapper namespace="org.fisco.bcos.dao.userDao">
+    <resultMap id="userResultMap" type="org.fisco.bcos.model.WegoUser">
+        <id column="user_id" property="userId"/>
+        <result column="username" property="userName"/>
+        <result column="passwd" property="password"/>
+        <result column="healthy_bean" property="healthyBean"/>
+    </resultMap>
+    <select id="getALLUser" resultMap="userResultMap" >
+       SELECT * FROM wego_user;
+    </select>
+
+
+
+
+</mapper>
