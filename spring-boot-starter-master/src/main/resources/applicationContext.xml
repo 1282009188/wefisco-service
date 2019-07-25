@@ -22,6 +22,9 @@
                 <property name="connectionsStr">
                     <list>
                         <value>129.204.37.46:20200</value>  <!-- IP:channel_port -->
+                        <value>129.204.37.46:20201</value>  <!-- IP:channel_port -->
+                        <value>129.204.37.46:20202</value>  <!-- IP:channel_port -->
+                        <value>129.204.37.46:20203</value>  <!-- IP:channel_port -->
                         <!--<value>129.204.37.46:20201</value>-->
                         <!--<value>129.204.37.46:20202</value>-->
                         <!--<value>129.204.37.46:20203</value>-->
