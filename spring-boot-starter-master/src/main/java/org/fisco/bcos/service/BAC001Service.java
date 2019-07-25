@@ -41,10 +41,12 @@ public class BAC001Service {
 
         Web3j web3j = Web3j.build(channelEthereumService, service.getGroupId());
 
-// 部署合约 即发行资产 资产描述：fisco bcos car asset; 资产简称 TTT; 最小转账单位 1 ;发行总量 10000000;
-        BAC001 bac001 = BAC001.deploy(web3j, credentials, contractGasProvider, "GDX car asset", "TTT",BigInteger.valueOf(1), BigInteger.valueOf(1000000)).send();
+        // 部署合约 即发行资产 资产描述：fisco bcos car asset; 资产简称 TTT; 最小转账单位 1 ;发行总量 10000000;
+        //BAC001 bac001 = BAC001.deploy(web3j, credentials, contractGasProvider, "GDX car asset", "TTT",BigInteger.valueOf(1), BigInteger.valueOf(1000000)).send();
+        BAC001 bac001 = BAC001.load("0x4239a69e66f7cbc2ff2340c971594f706e6e1109",web3j,credentials,contractGasProvider);//增加 发行者
+
         String contractAddress = bac001.getContractAddress();
-//增加 发行者
+        //System.out.println("---------------"+contractAddress);
         bac001.addIssuer(Alice).send();
 
 // 增发资产
