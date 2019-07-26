@@ -16,4 +16,5 @@ public interface UserfoodMapper {
     List<Userfood> selectAll();
 
     int updateByPrimaryKey(Userfood record);
+    List<Userfood> selectByUid(Integer uid);
 }

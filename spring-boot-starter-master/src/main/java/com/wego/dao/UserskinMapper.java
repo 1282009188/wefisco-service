@@ -1,5 +1,7 @@
 package com.wego.dao;
 
+import com.wego.entity.Skin;
+import com.wego.entity.Userfood;
 import com.wego.entity.Userskin;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -16,4 +18,6 @@ public interface UserskinMapper {
     List<Userskin> selectAll();
 
     int updateByPrimaryKey(Userskin record);
+
+    List<Userskin> selectByUid(Integer uid);
 }

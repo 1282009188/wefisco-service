@@ -33,4 +33,5 @@
     select sid, sname, bean, url
     from skin
   </select>
+
 </mapper>

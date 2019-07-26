@@ -1,9 +1,14 @@
 package com.wego.controller;
 
+import com.wego.entity.Food;
+import com.wego.entity.Skin;
+import com.wego.entity.User;
 import com.wego.model.ResultModel;
 import com.wego.service.UserServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author elizayuan
@@ -23,7 +28,7 @@ public class UserController {
      */
     @PostMapping("user/register")
     @ResponseBody
-    ResultModel register(@RequestParam String pwd, @RequestParam String name, @RequestParam  String email){
+    ResultModel<Integer> register(@RequestParam String pwd, @RequestParam String name, @RequestParam  String email){
         return userServer.register(pwd, name, email);
     }
 
@@ -41,8 +46,20 @@ public class UserController {
     /***
      * 查看用户信息，同时更新数据库的等级
      *
-     *//*
+     */
     @GetMapping("user/viewinfo")
-    @RequestBody
-    User */
+    @ResponseBody
+    ResultModel<User> viewInfo(Integer uid){
+        return userServer.showInfo(uid);
+    }
+   @GetMapping("user/showfood")
+    @ResponseBody
+    ResultModel<List<Food>> showfood(Integer uid){
+        return userServer.showFood(uid);
+   }
+    @GetMapping("user/showskin")
+    @ResponseBody
+    ResultModel<List<Skin>> showskin(Integer uid){
+        return userServer.showSkin(uid);
+    }
 }
