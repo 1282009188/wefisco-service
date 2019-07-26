@@ -293,8 +293,6 @@ public class UserServerImpl implements UserServer {
         BAC001 bac001 = BACManager.getBAC001(payer);
         try {
             bac001.send(payee.getAddr(), BigInteger.valueOf(amount), "交易健康豆").send();
-            System.out.println(payerName + ":" + bac001.balance(payer.getAddr()).send().toString());
-            System.out.println(payeeName + ":" + bac001.balance(payee.getAddr()).send().toString());
         } catch (Exception e) {
             e.printStackTrace();
         }

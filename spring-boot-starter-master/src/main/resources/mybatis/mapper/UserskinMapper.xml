@@ -36,4 +36,8 @@
   <select id="selectByUid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
     select * from userskin where uid=#{uid} and state=0
   </select>
+
+  <select id="selectByUidSid" resultType="com.wego.entity.Userskin" parameterType="java.lang.Integer">
+    select * from userskin where uid=#{uid} and sid=#{sid}
+  </select>
 </mapper>

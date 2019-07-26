@@ -22,8 +22,8 @@ public class SkinController {
      * @param uid
      * @return
      */
-    @PostMapping("user/buyskin")
-    ResultModel<Integer> buyskin(@RequestParam Integer uid, @RequestParam Integer sid) {
+    @PostMapping("skin/buyskin")
+    ResultModel buyskin(@RequestParam Integer uid, @RequestParam Integer sid) {
         return skinServer.buySkin(uid,sid);
     }
 }

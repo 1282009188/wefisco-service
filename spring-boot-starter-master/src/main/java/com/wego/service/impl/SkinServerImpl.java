@@ -1,36 +1,78 @@
 package com.wego.service.impl;
 
 
+import com.wego.bacService.BACManager;
+import com.wego.dao.SkinMapper;
+import com.wego.dao.UserMapper;
+import com.wego.dao.UserskinMapper;
 import com.wego.entity.Skin;
+import com.wego.entity.User;
+import com.wego.entity.Userskin;
+import com.wego.model.ResultModel;
+import com.wego.service.SkinServer;
+import org.fisco.bcos.BAC001;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.math.BigInteger;
 
-public class SkinServerImpl implements SkinServerImpl {
+@Service("SkinServer")
+public class SkinServerImpl implements SkinServer {
+    @Autowired
+    UserMapper userMapper;
 
-    //显示用户所拥有的皮肤
-    /**
-     * @param uid
-     * @return
-     */
-    List<Skin> showSkin(int uid);
+    @Autowired
+    SkinMapper skinMapper;
 
+    @Autowired
+    UserskinMapper userskinMapper;
 
-    // 使用皮肤
-    /**
-     * @param uid   用户id
-     * @param pid   宠物id
-     * @param sid   皮肤sid
-     * 更改皮肤状态
-     */
-    void  useSkin(int uid,int pid,int  sid);
+    @Override
+    public ResultModel<Skin> showSkin(int uid) {
+        return null;
+    }
 
+    @Override
+    public void useSkin(int uid, int pid, int sid) {
 
-    //购买皮肤
-    /**
-     * @param uid 用户id
-     * @param sid 皮肤id
-     * @return   0，1  0=》健康豆余额不足
-     */
-    int buySkin(int uid, int  sid);
+    }
 
+    @Override
+    public ResultModel buySkin(int uid, int sid) {
+        ResultModel resultModel = new ResultModel();
+        User user = userMapper.selectByPrimaryKey(uid);
+        Skin skin = skinMapper.selectByPrimaryKey(sid);
+        //1.查用户余额够不够
+        if (user.getBean() < skin.getBean()) {
+            resultModel.setCode(1);
+            resultModel.setMessage("余额不足");
+            return resultModel;
+        }
+        //2.查是否已有该皮肤
+        Userskin userskin = userskinMapper.selectByUidSid(uid, sid);
+        if (userskin != null) {
+            resultModel.setCode(1);
+            resultModel.setMessage("不能重复购买");
+            return resultModel;
+        }
+        //3.扣积分，加皮肤
+        user.setBean(user.getBean() - skin.getBean());
+        userMapper.updateByPrimaryKey(user);
+        Userskin us = new Userskin();
+        us.setUid(uid);
+        us.setSid(sid);
+        us.setState(0);
+        userskinMapper.insert(us);
+        //4.积分销毁上链
+        BAC001 bac001 = BACManager.getBAC001(user);
+        try {
+            bac001.destroy(BigInteger.valueOf(skin.getBean()), "购买皮肤支出").send();
+            System.out.println(user.getName() + ":" + bac001.balance(user.getAddr()).send().toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        resultModel.setCode(0);
+        resultModel.setMessage("购买成功");
+        return resultModel;
+    }
 }
