@@ -52,4 +52,13 @@ public interface UserServer {
      * @return
      */
     ResultModel< List<Skin>> showSkin(Integer uid);
+
+    /**
+     * 给食物喂食
+     * @param uid
+     * @param pid
+     * @param fid
+     * @return
+     */
+    ResultModel useFood(Integer uid,Integer pid,Integer fid);
 }

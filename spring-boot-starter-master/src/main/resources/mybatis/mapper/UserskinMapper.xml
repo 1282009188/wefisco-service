@@ -34,6 +34,6 @@
     from userskin
   </select>
   <select id="selectByUid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-    select * from userskin where uid=#{uid}
+    select * from userskin where uid=#{uid} and state=0
   </select>
 </mapper>

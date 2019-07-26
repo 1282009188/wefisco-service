@@ -16,4 +16,11 @@ public interface PetMapper {
     List<Pet> selectAll();
 
     int updateByPrimaryKey(Pet record);
+
+    /**
+     * 根据宠物的id去修改卡路里
+     * @param fid
+     * @return
+     */
+    int updateColByPrimaryKey(Integer fid);
 }

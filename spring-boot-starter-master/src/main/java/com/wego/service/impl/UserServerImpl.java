@@ -31,6 +31,8 @@ public class UserServerImpl implements UserServer {
     UserskinMapper userskinMapper;
     @Autowired
     SkinMapper skinMapper;
+    @Autowired
+    PetMapper petMapper;
 
     /**
      * 用户注册，会自动生成私钥和密钥
@@ -87,7 +89,7 @@ public class UserServerImpl implements UserServer {
      * @return 0为空，1为账户不存在，2为密码错误，3为登录成功
      */
     public ResultModel login(String name, String pwd) {
-        ResultModel<Integer> resultModel=new ResultModel<Integer>();
+        ResultModel<Integer> resultModel = new ResultModel<Integer>();
         if (name.equals("") || pwd.equals("")) {
             resultModel.setCode(1);
             resultModel.setMessage("用户名和密码不能为空");
@@ -116,7 +118,7 @@ public class UserServerImpl implements UserServer {
      * @return 用户信息
      */
     public ResultModel<User> showInfo(Integer uid) {
-        ResultModel<User> resultModel=new ResultModel<User>();
+        ResultModel<User> resultModel = new ResultModel<User>();
         if (uid == null) {
             resultModel.setCode(1);
             resultModel.setMessage("不能为空");
@@ -147,31 +149,32 @@ public class UserServerImpl implements UserServer {
 
     /**
      * 查询该用户有多少食物
+     *
      * @param uid
      * @return
      */
-    public ResultModel< List<Food>> showFood(Integer uid){
-        ResultModel< List<Food>> resultModel=new ResultModel<>();
-        if(uid==null){
+    public ResultModel<List<Food>> showFood(Integer uid) {
+        ResultModel<List<Food>> resultModel = new ResultModel<>();
+        if (uid == null) {
             resultModel.setCode(1);
             resultModel.setMessage("用户id为空");
             return resultModel;
         }
-        if (userMapper.selectByPrimaryKey(uid)==null){
+        if (userMapper.selectByPrimaryKey(uid) == null) {
             resultModel.setCode(1);
             resultModel.setMessage("该账户不存在");
             return resultModel;
         }
-        List<Userfood> userfood=userfoodMapper.selectByUid(uid);
-        if(userfood==null||userfood.size()==0){
+        List<Userfood> userfood = userfoodMapper.selectByUid(uid);
+        if (userfood == null || userfood.size() == 0) {
             resultModel.setCode(1);
             resultModel.setMessage("无食物");
             resultModel.setData(null);
             return resultModel;
         }
-        List<Food> foods=new ArrayList<>();
-        for (Userfood food:userfood) {
-            Integer fid=food.getFid();
+        List<Food> foods = new ArrayList<>();
+        for (Userfood food : userfood) {
+            Integer fid = food.getFid();
             foods.add(foodMapper.selectByPrimaryKey(fid));
 
         }
@@ -180,39 +183,75 @@ public class UserServerImpl implements UserServer {
         resultModel.setData(foods);
         return resultModel;
     }
+
     /**
      * 查询该用户有多少食物
+     *
      * @param uid
      * @return
      */
-    public ResultModel< List<Skin>> showSkin(Integer uid){
-        ResultModel< List<Skin>> resultModel=new ResultModel<>();
-        if(uid==null){
+    public ResultModel<List<Skin>> showSkin(Integer uid) {
+        ResultModel<List<Skin>> resultModel = new ResultModel<>();
+        if (uid == null) {
             resultModel.setCode(1);
             resultModel.setMessage("用户id为空");
             return resultModel;
         }
-        if (userMapper.selectByPrimaryKey(uid)==null){
+        if (userMapper.selectByPrimaryKey(uid) == null) {
             resultModel.setCode(1);
             resultModel.setMessage("该账户不存在");
             return resultModel;
         }
-        List<Userskin> userskins=userskinMapper.selectByUid(uid);
-        if(userskins==null||userskins.size()==0){
+        List<Userskin> userskins = userskinMapper.selectByUid(uid);
+        if (userskins == null || userskins.size() == 0) {
             resultModel.setCode(1);
             resultModel.setMessage("无皮肤");
             resultModel.setData(null);
             return resultModel;
         }
-        List<Skin> skins=new ArrayList<>();
-        for (Userskin userskin:userskins) {
-            Integer sid=userskin.getSid();
+        List<Skin> skins = new ArrayList<>();
+        for (Userskin userskin : userskins) {
+            Integer sid = userskin.getSid();
             skins.add(skinMapper.selectByPrimaryKey(sid));
 
         }
         resultModel.setCode(0);
         resultModel.setMessage("查询皮肤成功");
         resultModel.setData(skins);
+        return resultModel;
+    }
+
+    public ResultModel useFood(Integer uid, Integer pid, Integer fid){
+        ResultModel resultModel=new ResultModel();
+        if (uid==null||pid==null||fid==null){
+            resultModel.setCode(1);
+            resultModel.setMessage("用户id,宠物id，食物id不能为空");
+            return resultModel;
+        }
+        //根据用户id，和食物id去查找用户所属的食物
+        Userfood userfood=userfoodMapper.selectByUidAndFid(uid,fid);
+        if(userfood==null){
+            resultModel.setCode(1);
+            resultModel.setMessage("无食物");
+            return resultModel;
+        }
+        if(userfood.getNum()==0){
+            resultModel.setCode(1);
+            resultModel.setMessage("食物数量为0");
+            return resultModel;
+        }
+        //根据食物id去查找食物
+        Food food=foodMapper.selectByPrimaryKey(fid);
+        int col=food.getCol();
+        //修改宠物的col
+        Pet pet=petMapper.selectByPrimaryKey(pid);
+        petMapper.updateColByPrimaryKey(pid+pet.getCol());
+        //减少食物的数量
+        userfood.setNum(userfood.getNum()-1);
+        userfoodMapper.updateByPrimaryKey(userfood);
+        //返回成功
+        resultModel.setCode(0);
+        resultModel.setMessage("喂食成功");
         return resultModel;
     }
 }

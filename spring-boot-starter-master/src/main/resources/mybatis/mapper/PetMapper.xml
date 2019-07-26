@@ -35,4 +35,10 @@
     select pid, pname, uid, sid, col
     from pet
   </select>
+  <update id="updateColByPrimaryKey" parameterType="java.lang.Integer" >
+    update pet
+    set
+      col = #{col,jdbcType=INTEGER}
+    where pid = #{pid,jdbcType=INTEGER}
+  </update>
 </mapper>
