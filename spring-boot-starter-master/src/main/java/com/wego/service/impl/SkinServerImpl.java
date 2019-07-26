@@ -63,14 +63,17 @@ public class SkinServerImpl implements SkinServer {
         us.setSid(sid);
         us.setState(0);
         userskinMapper.insert(us);
-        //4.积分销毁上链
+        //4.积分转入WeGo账户
         BAC001 bac001 = BACManager.getBAC001(user);
+        User wego = userMapper.selectByName("wego");
         try {
-            bac001.destroy(BigInteger.valueOf(skin.getBean()), "购买皮肤支出").send();
-            System.out.println(user.getName() + ":" + bac001.balance(user.getAddr()).send().toString());
+            bac001.send(wego.getAddr(), BigInteger.valueOf(skin.getBean()), "交易健康豆").send();
+            wego.setBean(wego.getBean() + skin.getBean());
+            userMapper.updateByPrimaryKey(wego);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         resultModel.setCode(0);
         resultModel.setMessage("购买成功");
         return resultModel;
