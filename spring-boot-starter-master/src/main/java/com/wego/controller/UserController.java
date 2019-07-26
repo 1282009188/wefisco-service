@@ -4,6 +4,8 @@ import com.wego.entity.Food;
 import com.wego.entity.Skin;
 import com.wego.entity.User;
 import com.wego.model.ResultModel;
+import com.wego.model.UserModel;
+import com.wego.service.FoodServer;
 import com.wego.service.UserServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,8 @@ import java.util.List;
 public class UserController {
     @Autowired
     UserServer userServer;
+    @Autowired
+    FoodServer foodServer;
 
     /**
      * 注册
@@ -56,11 +60,6 @@ public class UserController {
         return userServer.showInfo(uid);
     }
 
-    @GetMapping("user/showfood")
-    @ResponseBody
-    ResultModel<List<Food>> showfood(Integer uid) {
-        return userServer.showFood(uid);
-    }
 
     @GetMapping("user/showskin")
     @ResponseBody
@@ -69,15 +68,15 @@ public class UserController {
     }
 
     /**
-     * 根据用户的id，宠物id，食物id喂食，同时增在宠物的col
+     * 显示主页用户以及形象信息
      *
      * @param uid
-     * @param pid
-     * @param fid
      * @return
      */
-    @PostMapping("user/usefood")
-    ResultModel usefood(@RequestParam Integer uid, @RequestParam Integer pid, @RequestParam Integer fid) {
-        return userServer.useFood(uid, pid, fid);
+    @GetMapping("user/showimage")
+    @ResponseBody
+    ResultModel<UserModel> showImage(Integer uid) {
+        return userServer.getImage(uid);
     }
+
 }

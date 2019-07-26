@@ -1,24 +1,34 @@
 package com.wego.service;
 
 import com.wego.entity.Food;
+import com.wego.model.ResultModel;
 import com.wego.service.impl.FoodServerImpl;
 
 import java.util.List;
 
-public class FoodServer  implements FoodServerImpl {
+public interface FoodServer {
 
-    @Override
-    public List<Food> showUserfoods(int uid) {
-        return null;
-    }
+    /**
+     * 根据用户id去查找食物id
+     * @param uid
+     * @return
+     */
+    ResultModel<List<Food>> showFood(Integer uid);
 
-    @Override
-    public void useFood(int uid, int pid, int fid) {
 
-    }
+    /**
+     * 给食物喂食
+     * @param uid
+     * @param pid
+     * @param fid
+     * @return
+     */
+    ResultModel useFood(Integer uid,Integer pid,Integer fid);
 
-    @Override
-    public int buyFood(int uid, int fid, int num) {
-        return 0;
-    }
+    /**
+     * 用于显示所有的食物
+     * @return
+     */
+    ResultModel<List<Food>>getAllFood();
+
 }

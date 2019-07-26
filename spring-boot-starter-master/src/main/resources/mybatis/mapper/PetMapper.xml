@@ -7,6 +7,7 @@
     <result column="uid" property="uid" jdbcType="INTEGER" />
     <result column="sid" property="sid" jdbcType="INTEGER" />
     <result column="col" property="col" jdbcType="INTEGER" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from pet
@@ -26,12 +27,12 @@
     where pid = #{pid,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select pid, pname, uid, col
+    select pid, pname, uid, col,url
     from pet
     where pid = #{pid,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select pid, pname, uid, sid, col
+    select pid, pname, uid, sid, col,url
     from pet
   </select>
   <update id="updateColByPrimaryKey" >
@@ -40,4 +41,8 @@
       col = #{param2,jdbcType=INTEGER}
     where pid = #{param1,jdbcType=INTEGER}
   </update>
+  <select id="selectByUid" resultMap="BaseResultMap" >
+    select pid, pname, uid, sid, col,url
+    from pet where uid=#{uid}
+  </select>
 </mapper>
