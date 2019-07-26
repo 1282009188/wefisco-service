@@ -1,11 +1,12 @@
 package com.wego.service;
 
 import com.wego.entity.Skin;
+import com.wego.model.ResultModel;
 import com.wego.service.impl.SkinServerImpl;
 
 import java.util.List;
 
-public class SkinServer implements SkinServerImpl {
+public interface SkinServer {
 
     @Override
     public List<Skin> showSkin(int uid) {
@@ -18,7 +19,7 @@ public class SkinServer implements SkinServerImpl {
     }
 
     @Override
-    public int buySkin(int uid, int sid) {
+    public ResultModel buySkin(int uid, int sid) {
         return 0;
     }
 }
