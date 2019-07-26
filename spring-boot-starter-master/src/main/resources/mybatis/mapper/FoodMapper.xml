@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wego.dao.FoodMapper" >
+  <resultMap id="BaseResultMap" type="com.wego.entity.Food" >
+    <id column="fid" property="fid" jdbcType="INTEGER" />
+    <result column="fname" property="fname" jdbcType="VARCHAR" />
+    <result column="bean" property="bean" jdbcType="INTEGER" />
+    <result column="col" property="col" jdbcType="INTEGER" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from food
+    where fid = #{fid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wego.entity.Food" >
+    insert into food (fid, fname, bean, 
+      col, url)
+    values (#{fid,jdbcType=INTEGER}, #{fname,jdbcType=VARCHAR}, #{bean,jdbcType=INTEGER}, 
+      #{col,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.wego.entity.Food" >
+    update food
+    set fname = #{fname,jdbcType=VARCHAR},
+      bean = #{bean,jdbcType=INTEGER},
+      col = #{col,jdbcType=INTEGER},
+      url = #{url,jdbcType=VARCHAR}
+    where fid = #{fid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select fid, fname, bean, col, url
+    from food
+    where fid = #{fid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select fid, fname, bean, col, url
+    from food
+  </select>
+</mapper>

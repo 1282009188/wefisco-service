@@ -1,20 +1,23 @@
-package org.fisco.bcos.controller;
+package com.wego.controller;
 
-import org.fisco.bcos.dao.userDao;
-import org.fisco.bcos.model.WegoUser;
+
+import com.wego.dao.UserMapper;
+
+
+import com.wego.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
 public class HelloController {
     @Autowired
-    userDao userdo;
+    UserMapper userMapper;
     @RequestMapping("/index")
     public String index() {
         return "ok";
@@ -37,8 +40,8 @@ public class HelloController {
         return result;
     }
   @RequestMapping("/user")
-    public WegoUser getUser(){
-    return  userdo.getALLUser();
+    public List<User> getUser(){
+    return  userMapper.selectAll();
   }
 
 }

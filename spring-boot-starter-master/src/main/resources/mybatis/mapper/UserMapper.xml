@@ -1,20 +1,50 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- 用于用户表的查询语句-->
-<mapper namespace="org.fisco.bcos.dao.userDao">
-    <resultMap id="userResultMap" type="org.fisco.bcos.model.WegoUser">
-        <id column="user_id" property="userId"/>
-        <result column="username" property="userName"/>
-        <result column="passwd" property="password"/>
-        <result column="healthy_bean" property="healthyBean"/>
-    </resultMap>
-    <select id="getALLUser" resultMap="userResultMap" >
-       SELECT * FROM wego_user;
-    </select>
-
-
-
-
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wego.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.wego.entity.User" >
+    <id column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="pwd" property="pwd" jdbcType="VARCHAR" />
+    <result column="bean" property="bean" jdbcType="INTEGER" />
+    <result column="addr" property="addr" jdbcType="VARCHAR" />
+    <result column="sk" property="sk" jdbcType="VARCHAR" />
+    <result column="pk" property="pk" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where uid = #{uid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wego.entity.User" >
+    insert into user (uid, name, account, 
+      pwd, bean, addr, sk, 
+      pk, email, level)
+    values (#{uid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, 
+      #{pwd,jdbcType=VARCHAR}, #{bean,jdbcType=INTEGER}, #{addr,jdbcType=VARCHAR}, #{sk,jdbcType=VARCHAR}, 
+      #{pk,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.wego.entity.User" >
+    update user
+    set name = #{name,jdbcType=VARCHAR},
+      account = #{account,jdbcType=VARCHAR},
+      pwd = #{pwd,jdbcType=VARCHAR},
+      bean = #{bean,jdbcType=INTEGER},
+      addr = #{addr,jdbcType=VARCHAR},
+      sk = #{sk,jdbcType=VARCHAR},
+      pk = #{pk,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      level = #{level,jdbcType=INTEGER}
+    where uid = #{uid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select uid, name, account, pwd, bean, addr, sk, pk, email, level
+    from user
+    where uid = #{uid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select uid, name, account, pwd, bean, addr, sk, pk, email, level
+    from user
+  </select>
 </mapper>

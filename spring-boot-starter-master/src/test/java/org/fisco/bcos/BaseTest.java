@@ -15,6 +15,7 @@
  */
 package org.fisco.bcos;
 
+import com.wego.Application;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
