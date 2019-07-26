@@ -4,7 +4,9 @@ import com.wego.entity.Food;
 import com.wego.entity.Skin;
 import com.wego.entity.User;
 import com.wego.model.ResultModel;
+import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -32,6 +34,8 @@ public interface UserServer {
      */
     ResultModel login(String name, String pwd);
 
+    //健康豆转账
+    ResultModel transfer(String payerName, String payeeName, int amount);
     /***
      * 查询用户信息，同时更新等级
      * @param integer

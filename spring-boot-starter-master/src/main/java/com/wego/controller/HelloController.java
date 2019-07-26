@@ -43,7 +43,6 @@ public class HelloController {
 
     @RequestMapping("/user")
     public List<User> getUser() {
-
         return userMapper.selectAll();
     }
 
