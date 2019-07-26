@@ -5,7 +5,7 @@ import com.wego.entity.Skin;
 
 import java.util.List;
 
-public interface SkinServerImpl {
+public class SkinServerImpl implements SkinServerImpl {
 
     //显示用户所拥有的皮肤
     /**
