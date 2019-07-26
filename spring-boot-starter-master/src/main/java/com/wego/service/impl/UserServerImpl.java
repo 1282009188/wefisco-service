@@ -240,12 +240,18 @@ public class UserServerImpl implements UserServer {
             resultModel.setMessage("食物数量为0");
             return resultModel;
         }
-        //根据食物id去查找食物
+        //根据食物id去查找食物的卡路里
         Food food=foodMapper.selectByPrimaryKey(fid);
         int col=food.getCol();
         //修改宠物的col
         Pet pet=petMapper.selectByPrimaryKey(pid);
-        petMapper.updateColByPrimaryKey(pid+pet.getCol());
+        if(pet==null){
+            resultModel.setCode(1);
+            resultModel.setMessage("宠物不存在");
+            return resultModel;
+        }
+        pet.setCol(col+pet.getCol());
+        petMapper.updateByPrimaryKey(pet);
         //减少食物的数量
         userfood.setNum(userfood.getNum()-1);
         userfoodMapper.updateByPrimaryKey(userfood);

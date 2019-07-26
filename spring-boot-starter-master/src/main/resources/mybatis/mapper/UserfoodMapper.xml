@@ -36,7 +36,7 @@
   <select id="selectByUid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
     select * from userfood where uid=#{uid}
   </select>
-  <select id="selectByUidAndFid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-    select * from userfood where uid=#{uid} and fid=#{fid}
+  <select id="selectByUidAndFid" resultMap="BaseResultMap" >
+    select * from userfood where uid=#{param1} and fid=#{param2}
   </select>
 </mapper>
