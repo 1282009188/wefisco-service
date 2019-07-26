@@ -33,4 +33,7 @@
     select id, uid, fid, num
     from userfood
   </select>
+  <select id="selectByUid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select * from userfood where uid=#{uid}
+  </select>
 </mapper>

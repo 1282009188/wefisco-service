@@ -4,18 +4,10 @@ package com.wego.model;
  * @author elizayuan
  * 主要用于跟前端实体的对接,返回值
  */
-public class ResultModel {
+public class ResultModel <T>{
     int code;
     String message;
-    int uid;
-
-    public int getUid() {
-        return uid;
-    }
-
-    public void setUid(int uid) {
-        this.uid = uid;
-    }
+    T data;
 
     public int getCode() {
         return code;
@@ -33,4 +25,11 @@ public class ResultModel {
         this.message = message;
     }
 
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
 }

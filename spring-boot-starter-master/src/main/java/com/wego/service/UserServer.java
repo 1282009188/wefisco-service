@@ -1,7 +1,11 @@
 package com.wego.service;
 
+import com.wego.entity.Food;
+import com.wego.entity.Skin;
 import com.wego.entity.User;
 import com.wego.model.ResultModel;
+
+import java.util.List;
 
 /**
  * @author elizayuan
@@ -33,6 +37,19 @@ public interface UserServer {
      * @param integer
      * @return
      */
-    User showInfo(Integer integer);
+    ResultModel<User> showInfo(Integer integer);
 
+    /**
+     * 根据用户id去查找食物id
+     * @param uid
+     * @return
+     */
+    ResultModel<List<Food>> showFood(Integer uid);
+
+    /***
+     * 根据用户id去查找皮肤id
+     * @param uid
+     * @return
+     */
+    ResultModel< List<Skin>> showSkin(Integer uid);
 }
