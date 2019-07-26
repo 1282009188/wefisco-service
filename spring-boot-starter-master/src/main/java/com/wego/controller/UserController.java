@@ -1,7 +1,7 @@
 package com.wego.controller;
 
 import com.wego.model.ResultModel;
-import com.wego.server.UserServer;
+import com.wego.service.UserServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

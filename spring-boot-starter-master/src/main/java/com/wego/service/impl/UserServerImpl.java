@@ -1,15 +1,18 @@
-package com.wego.server.impl;
+package com.wego.service.impl;
 
+import com.wego.bacService.BACManager;
 import com.wego.dao.UserMapper;
 import com.wego.entity.User;
 import com.wego.model.ResultModel;
-import com.wego.server.UserServer;
-import org.apache.commons.codec.digest.DigestUtils;
+import com.wego.service.UserServer;
+import org.fisco.bcos.BAC001;
 import org.fisco.bcos.web3j.crypto.Credentials;
 import org.fisco.bcos.web3j.crypto.EncryptType;
 import org.fisco.bcos.web3j.crypto.gm.GenCredential;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.math.BigInteger;
 
 /**
  * @author elizayuan
@@ -37,7 +40,7 @@ public class UserServerImpl implements UserServer {
             return resultModel;
         }
 
-        if (userMapper.selectByName(name)!=null&&name.equals(userMapper.selectByName(name).getName())) {
+        if (userMapper.selectByName(name) != null && name.equals(userMapper.selectByName(name).getName())) {
             resultModel.setCode(0);
             resultModel.setMessage("用户已经存在");
             return resultModel;
@@ -82,12 +85,12 @@ public class UserServerImpl implements UserServer {
             resultModel.setMessage("用户名和密码不能为空");
             return resultModel;
         }
-        if (userMapper.selectByName(name)==null){
+        if (userMapper.selectByName(name) == null) {
             resultModel.setCode(0);
             resultModel.setMessage("用户不存在");
             return resultModel;
         }
-        if (userMapper.selectByName(name)!=null&&!pwd.equals(userMapper.selectByName(name).getPwd())) {
+        if (userMapper.selectByName(name) != null && !pwd.equals(userMapper.selectByName(name).getPwd())) {
             resultModel.setCode(0);
             resultModel.setMessage("密码错误");
             return resultModel;
@@ -97,5 +100,46 @@ public class UserServerImpl implements UserServer {
         resultModel.setUid(userMapper.selectByName(name).getUid());
         return resultModel;
     }
+
+    public ResultModel transfer(String payerName, String payeeName, int amount) {
+        User payer = userMapper.selectByName(payerName);
+        User payee = userMapper.selectByName(payeeName);
+
+        ResultModel resultModel = new ResultModel();
+
+        if (payer == null) {
+            resultModel.setCode(1);
+            resultModel.setMessage("支付方名称错误");
+            return resultModel;
+        }
+        if (payee == null) {
+            resultModel.setCode(1);
+            resultModel.setMessage("收款方不存在");
+            return resultModel;
+        }
+        if (payer.getBean() < amount) {
+            resultModel.setCode(1);
+            resultModel.setMessage("余额不足");
+            return resultModel;
+        }
+        //1.支付方减豆，收款方加豆，上链
+        payer.setBean(payer.getBean() - amount);
+        payee.setBean(payee.getBean() + amount);
+        userMapper.updateByPrimaryKey(payer);
+        userMapper.updateByPrimaryKey(payee);
+        BAC001 bac001 = BACManager.getBAC001(payer);
+        try {
+            bac001.send(payee.getAddr(), BigInteger.valueOf(amount), "交易健康豆").send();
+            System.out.println(payerName + ":" + bac001.balance(payer.getAddr()).send().toString());
+            System.out.println(payeeName + ":" + bac001.balance(payee.getAddr()).send().toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        resultModel.setCode(0);
+        resultModel.setMessage("转账成功");
+        return resultModel;
+    }
+
 
 }
