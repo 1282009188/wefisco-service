@@ -18,6 +18,7 @@ import java.util.Map;
 public class HelloController {
     @Autowired
     UserMapper userMapper;
+
     @RequestMapping("/index")
     public String index() {
         return "ok";
@@ -39,9 +40,11 @@ public class HelloController {
         result.put("username", username);
         return result;
     }
-  @RequestMapping("/user")
-    public List<User> getUser(){
-    return  userMapper.selectAll();
-  }
+
+    @RequestMapping("/user")
+    public List<User> getUser() {
+
+        return userMapper.selectAll();
+    }
 
 }

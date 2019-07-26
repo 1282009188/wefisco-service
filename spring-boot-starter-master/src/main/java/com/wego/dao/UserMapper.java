@@ -16,4 +16,7 @@ public interface UserMapper {
     List<User> selectAll();
 
     int updateByPrimaryKey(User record);
+
+    //根据用户名来查找用户
+    User selectByName(String name);
 }

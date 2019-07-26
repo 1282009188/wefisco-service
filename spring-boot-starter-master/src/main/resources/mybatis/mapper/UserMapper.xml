@@ -18,17 +18,16 @@
     where uid = #{uid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.wego.entity.User" >
-    insert into user (uid, name, account, 
+    insert into user (uid, name,
       pwd, bean, addr, sk, 
       pk, email, level)
-    values (#{uid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, 
+    values (#{uid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
       #{pwd,jdbcType=VARCHAR}, #{bean,jdbcType=INTEGER}, #{addr,jdbcType=VARCHAR}, #{sk,jdbcType=VARCHAR}, 
       #{pk,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.wego.entity.User" >
     update user
     set name = #{name,jdbcType=VARCHAR},
-      account = #{account,jdbcType=VARCHAR},
       pwd = #{pwd,jdbcType=VARCHAR},
       bean = #{bean,jdbcType=INTEGER},
       addr = #{addr,jdbcType=VARCHAR},
@@ -39,9 +38,14 @@
     where uid = #{uid,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select uid, name, account, pwd, bean, addr, sk, pk, email, level
+    select uid, name, pwd, bean, addr, sk, pk, email, level
     from user
     where uid = #{uid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select uid, name, pwd, bean, addr, sk, pk, email, level
+    from user
+    where name = #{name}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select uid, name, account, pwd, bean, addr, sk, pk, email, level
