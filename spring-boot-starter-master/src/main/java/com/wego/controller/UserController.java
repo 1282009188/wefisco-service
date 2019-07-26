@@ -1,7 +1,8 @@
 package com.wego.controller;
 
+import com.wego.entity.User;
 import com.wego.model.ResultModel;
-import com.wego.server.UserServer;
+import com.wego.service.UserServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,8 +42,10 @@ public class UserController {
     /***
      * 查看用户信息，同时更新数据库的等级
      *
-     *//*
+     */
     @GetMapping("user/viewinfo")
-    @RequestBody
-    User */
+    @ResponseBody
+    User viewInfo(Integer uid){
+        return userServer.showInfo(uid);
+    }
 }

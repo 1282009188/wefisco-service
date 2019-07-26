@@ -1,10 +1,9 @@
-package com.wego.server.impl;
+package com.wego.service.impl;
 
 import com.wego.dao.UserMapper;
 import com.wego.entity.User;
 import com.wego.model.ResultModel;
-import com.wego.server.UserServer;
-import org.apache.commons.codec.digest.DigestUtils;
+import com.wego.service.UserServer;
 import org.fisco.bcos.web3j.crypto.Credentials;
 import org.fisco.bcos.web3j.crypto.EncryptType;
 import org.fisco.bcos.web3j.crypto.gm.GenCredential;
@@ -37,7 +36,7 @@ public class UserServerImpl implements UserServer {
             return resultModel;
         }
 
-        if (userMapper.selectByName(name)!=null&&name.equals(userMapper.selectByName(name).getName())) {
+        if (userMapper.selectByName(name) != null && name.equals(userMapper.selectByName(name).getName())) {
             resultModel.setCode(0);
             resultModel.setMessage("用户已经存在");
             return resultModel;
@@ -82,12 +81,12 @@ public class UserServerImpl implements UserServer {
             resultModel.setMessage("用户名和密码不能为空");
             return resultModel;
         }
-        if (userMapper.selectByName(name)==null){
+        if (userMapper.selectByName(name) == null) {
             resultModel.setCode(0);
             resultModel.setMessage("用户不存在");
             return resultModel;
         }
-        if (userMapper.selectByName(name)!=null&&!pwd.equals(userMapper.selectByName(name).getPwd())) {
+        if (userMapper.selectByName(name) != null && !pwd.equals(userMapper.selectByName(name).getPwd())) {
             resultModel.setCode(0);
             resultModel.setMessage("密码错误");
             return resultModel;
@@ -98,4 +97,31 @@ public class UserServerImpl implements UserServer {
         return resultModel;
     }
 
+    /**
+     * 查询用户信息，同时更新等级
+     *
+     * @param uid
+     * @return 用户信息
+     */
+    public User showInfo(Integer uid) {
+        if (uid == null) {
+            return null;
+        }
+        User user = userMapper.selectByPrimaryKey(uid);
+        if (user == null) {
+            return null;
+        }
+        int level = 0;
+        if (user.getBean() != 0) {
+            int temp = user.getBean() / 1000;
+            level = (int) (Math.log(temp) / Math.log(10)) + 1;
+        }
+
+        userMapper.updateByPrimaryKey(user);
+        user.setLevel(level);
+        user.setSk(null);
+        user.setPk(null);
+        user.setAddr(null);
+        return user;
+    }
 }
