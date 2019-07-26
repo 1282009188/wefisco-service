@@ -5,7 +5,6 @@
     <id column="pid" property="pid" jdbcType="INTEGER" />
     <result column="pname" property="pname" jdbcType="VARCHAR" />
     <result column="uid" property="uid" jdbcType="INTEGER" />
-    <result column="sid" property="sid" jdbcType="INTEGER" />
     <result column="col" property="col" jdbcType="INTEGER" />
     <result column="url" property="url" jdbcType="VARCHAR" />
   </resultMap>
@@ -32,7 +31,7 @@
     where pid = #{pid,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select pid, pname, uid, sid, col,url
+    select pid, pname, uid, col,url
     from pet
   </select>
   <update id="updateColByPrimaryKey" >
@@ -42,7 +41,7 @@
     where pid = #{param1,jdbcType=INTEGER}
   </update>
   <select id="selectByUid" resultMap="BaseResultMap" >
-    select pid, pname, uid, sid, col,url
+    select pid, pname, uid, col,url
     from pet where uid=#{uid}
   </select>
 </mapper>

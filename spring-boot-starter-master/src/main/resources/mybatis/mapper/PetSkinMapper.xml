@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wego.dao.PetSkinMapper" >
+    <resultMap id="BaseResultMap" type="com.wego.entity.PetSkin" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="pid" property="pid" jdbcType="INTEGER" />
+        <result column="sid" property="sid" jdbcType="INTEGER" />
+        <result column="url" property="url" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="selectByPidAndSid" resultMap="BaseResultMap">
+        select * from petskin where pid=#{param1} and sid=#{param2}
+    </select>
+
+</mapper>

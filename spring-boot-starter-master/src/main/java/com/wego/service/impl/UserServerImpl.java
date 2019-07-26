@@ -6,7 +6,6 @@ import com.wego.entity.*;
 import com.wego.model.ResultModel;
 import com.wego.model.UserModel;
 import com.wego.service.UserServer;
-import jnr.ffi.annotations.In;
 import org.fisco.bcos.BAC001;
 import org.fisco.bcos.web3j.crypto.Credentials;
 import org.fisco.bcos.web3j.crypto.EncryptType;
@@ -37,6 +36,8 @@ public class UserServerImpl implements UserServer {
     SkinMapper skinMapper;
     @Autowired
     PetMapper petMapper;
+    @Autowired
+    PetSkinMapper petSkinMapper;
 
     /**
      * 用户注册，会自动生成私钥和密钥
@@ -240,11 +241,22 @@ public class UserServerImpl implements UserServer {
 
         //去查找用户的id去查找宠物信息
         Pet pet = petMapper.selectByUid(uid);
+        if (pet == null) {
+            resultModel.setCode(1);
+            resultModel.setMessage("宠物为空");
+            return resultModel;
+        }
+        //查找穿戴的皮肤
         Userskin userskin = userskinMapper.selectByUidUseSkin(uid);
         userModel.setUrl(pet.getUrl());
         userModel.setPetname(pet.getPname());
         if (userskin == null) {
             userModel.setUrl(pet.getUrl());
+        } else {
+
+            //根据宠物和皮肤去确定唯一的穿戴
+            PetSkin petSkin = petSkinMapper.selectByPidAndSid(pet.getPid(), userskin.getSid());
+            userModel.setUrl(petSkin.getUrl());
         }
         resultModel.setCode(0);
         resultModel.setMessage("查询成功");
