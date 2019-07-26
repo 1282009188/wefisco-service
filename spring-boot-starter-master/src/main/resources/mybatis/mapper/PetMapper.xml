@@ -22,12 +22,11 @@
     update pet
     set pname = #{pname,jdbcType=VARCHAR},
       uid = #{uid,jdbcType=INTEGER},
-      sid = #{sid,jdbcType=INTEGER},
       col = #{col,jdbcType=INTEGER}
     where pid = #{pid,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select pid, pname, uid, sid, col
+    select pid, pname, uid, col
     from pet
     where pid = #{pid,jdbcType=INTEGER}
   </select>
@@ -35,10 +34,10 @@
     select pid, pname, uid, sid, col
     from pet
   </select>
-  <update id="updateColByPrimaryKey" parameterType="java.lang.Integer" >
+  <update id="updateColByPrimaryKey" >
     update pet
     set
-      col = #{col,jdbcType=INTEGER}
-    where pid = #{pid,jdbcType=INTEGER}
+      col = #{param2,jdbcType=INTEGER}
+    where pid = #{param1,jdbcType=INTEGER}
   </update>
 </mapper>

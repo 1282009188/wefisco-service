@@ -224,33 +224,39 @@ public class UserServerImpl implements UserServer {
         return resultModel;
     }
 
-    public ResultModel useFood(Integer uid, Integer pid, Integer fid) {
-        ResultModel resultModel = new ResultModel();
-        if (uid == null || pid == null || fid == null) {
+    public ResultModel useFood(Integer uid, Integer pid, Integer fid){
+        ResultModel resultModel=new ResultModel();
+        if (uid==null||pid==null||fid==null){
             resultModel.setCode(1);
             resultModel.setMessage("用户id,宠物id，食物id不能为空");
             return resultModel;
         }
         //根据用户id，和食物id去查找用户所属的食物
-        Userfood userfood = userfoodMapper.selectByUidAndFid(uid, fid);
-        if (userfood == null) {
+        Userfood userfood=userfoodMapper.selectByUidAndFid(uid,fid);
+        if(userfood==null){
             resultModel.setCode(1);
             resultModel.setMessage("无食物");
             return resultModel;
         }
-        if (userfood.getNum() == 0) {
+        if(userfood.getNum()==0){
             resultModel.setCode(1);
             resultModel.setMessage("食物数量为0");
             return resultModel;
         }
-        //根据食物id去查找食物
-        Food food = foodMapper.selectByPrimaryKey(fid);
-        int col = food.getCol();
+        //根据食物id去查找食物的卡路里
+        Food food=foodMapper.selectByPrimaryKey(fid);
+        int col=food.getCol();
         //修改宠物的col
-        Pet pet = petMapper.selectByPrimaryKey(pid);
-        petMapper.updateColByPrimaryKey(pid + pet.getCol());
+        Pet pet=petMapper.selectByPrimaryKey(pid);
+        if(pet==null){
+            resultModel.setCode(1);
+            resultModel.setMessage("宠物不存在");
+            return resultModel;
+        }
+        pet.setCol(col+pet.getCol());
+        petMapper.updateByPrimaryKey(pet);
         //减少食物的数量
-        userfood.setNum(userfood.getNum() - 1);
+        userfood.setNum(userfood.getNum()-1);
         userfoodMapper.updateByPrimaryKey(userfood);
         //返回成功
         resultModel.setCode(0);

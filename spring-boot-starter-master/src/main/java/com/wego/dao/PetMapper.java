@@ -22,5 +22,5 @@ public interface PetMapper {
      * @param fid
      * @return
      */
-    int updateColByPrimaryKey(Integer fid);
+    int updateColByPrimaryKey(Integer fid,Integer col);
 }
