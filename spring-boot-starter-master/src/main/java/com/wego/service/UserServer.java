@@ -4,6 +4,7 @@ import com.wego.entity.Food;
 import com.wego.entity.Skin;
 import com.wego.entity.User;
 import com.wego.model.ResultModel;
+import com.wego.model.UserModel;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -42,14 +43,6 @@ public interface UserServer {
      * @return
      */
     ResultModel<User> showInfo(Integer integer);
-
-    /**
-     * 根据用户id去查找食物id
-     * @param uid
-     * @return
-     */
-    ResultModel<List<Food>> showFood(Integer uid);
-
     /***
      * 根据用户id去查找皮肤id
      * @param uid
@@ -58,11 +51,10 @@ public interface UserServer {
     ResultModel< List<Skin>> showSkin(Integer uid);
 
     /**
-     * 给食物喂食
+     * 根据用户去查找用户信息以及其企鹅信息
      * @param uid
-     * @param pid
-     * @param fid
      * @return
      */
-    ResultModel useFood(Integer uid,Integer pid,Integer fid);
+    ResultModel<UserModel> getImage(Integer uid);
+
 }

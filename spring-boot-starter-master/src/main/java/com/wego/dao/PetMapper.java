@@ -23,4 +23,11 @@ public interface PetMapper {
      * @return
      */
     int updateColByPrimaryKey(Integer fid,Integer col);
+
+    /**
+     * 根据用户的id去查找宠物信息
+     * @param uid
+     * @return
+     */
+    Pet selectByUid(Integer uid);
 }
