@@ -33,7 +33,7 @@ public class UserController {
     @PostMapping("user/register")
     @ResponseBody
     @CrossOrigin(origins = "*")
-    ResultModel<Integer> register(@RequestParam String pwd, @RequestParam String name, @RequestParam String email) {
+    ResultModel<Integer> register(@RequestParam String pwd, @RequestParam String name, @RequestParam String email) throws Exception{
         return userService.register(pwd, name, email);
     }
 

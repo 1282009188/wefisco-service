@@ -41,7 +41,7 @@
     where pid = #{param1,jdbcType=INTEGER}
   </update>
   <select id="selectByUid" resultMap="BaseResultMap" >
-    select pid, pname, uid, col,url
+    select id,pid, pname, uid, col,url
     from userpet where uid=#{uid}
   </select>
 </mapper>

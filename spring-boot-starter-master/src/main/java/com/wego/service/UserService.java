@@ -25,7 +25,7 @@ public interface UserService {
      * @param email
      * @return
      */
-    ResultModel register(String pwd, String name, String email);
+    ResultModel register(String pwd, String name, String email) throws Exception;
 
     /**
      * 登录

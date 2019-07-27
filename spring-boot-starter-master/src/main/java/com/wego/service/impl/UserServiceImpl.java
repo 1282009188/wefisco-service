@@ -7,9 +7,11 @@ import com.wego.model.ResultModel;
 import com.wego.model.UserModel;
 import com.wego.service.UserService;
 import org.fisco.bcos.BAC001;
+import org.fisco.bcos.BAC002;
 import org.fisco.bcos.web3j.crypto.Credentials;
 import org.fisco.bcos.web3j.crypto.EncryptType;
 import org.fisco.bcos.web3j.crypto.gm.GenCredential;
+import org.fisco.bcos.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,7 +52,7 @@ public class UserServiceImpl implements UserService {
      * @param email 邮箱
      * @return Map key,1代表注册成功,message:注册成功，key:0表示注册失败,message:用户已经存在
      */
-    public ResultModel register(String pwd, String name, String email) {
+    public ResultModel register(String pwd, String name, String email) throws Exception {
         ResultModel resultModel = new ResultModel();
         if (pwd.equals("") || name.equals("") || email.equals("")) {
             resultModel.setCode(1);
@@ -98,6 +100,14 @@ public class UserServiceImpl implements UserService {
         userPet.setUid(user.getUid());
         userpetMapper.insert(userPet);
 
+        //生成企鹅资产
+        user = userMapper.selectByName(name);
+        User wego = userMapper.selectByName("wego");
+        BAC002 bac002 = BACManager.getBAC002(wego);
+        bac002.issueWithAssetURI(user.getAddr(), BigInteger.valueOf(userPet.getId()),
+                "this is a pet information url is www."
+                        + pet.getName() + ".com",
+                (user.getName() + "get a pet").getBytes()).send();
         resultModel.setCode(0);
         resultModel.setMessage("注册成功");
         return resultModel;
@@ -199,8 +209,6 @@ public class UserServiceImpl implements UserService {
         resultModel.setData(user);
         return resultModel;
     }
-
-
 
 
     /**

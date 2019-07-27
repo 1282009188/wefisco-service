@@ -4,6 +4,7 @@ import com.wego.dao.UserMapper;
 import com.wego.entity.User;
 import com.wego.model.ResultModel;
 import org.fisco.bcos.BAC001;
+import org.fisco.bcos.BAC002;
 import org.fisco.bcos.channel.client.Service;
 import org.fisco.bcos.web3j.crypto.Credentials;
 import org.fisco.bcos.web3j.protocol.Web3j;
@@ -46,4 +47,27 @@ public class InitController {
         model.setData(bac001.getContractAddress());
         return model;
     }
+
+    @RequestMapping("/deployBAC002")
+    @CrossOrigin(origins = "*")
+    ResultModel deployBAC002() throws Exception {
+        BigInteger gasPrice = new BigInteger("1");
+        BigInteger gasLimit = new BigInteger("2100000000");
+        ContractGasProvider contractGasProvider = new StaticGasProvider(gasPrice, gasLimit);
+        // 获取spring配置文件，生成上下文
+        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        Service service = context.getBean(Service.class);
+        service.run();
+        ChannelEthereumService channelEthereumService = new ChannelEthereumService();
+        channelEthereumService.setChannelService(service);
+        Web3j web3j = Web3j.build(channelEthereumService, service.getGroupId());
+        User wego = userMapper.selectByName("wego");
+        // 部署合约 即发行资产 需要传入 资产描述和资产简称
+        BAC002 bac002 = BAC002.deploy(web3j, Credentials.create(wego.getSk()), contractGasProvider, "wego pet asset", "小企鹅").send();
+        ResultModel model = new ResultModel();
+        model.setMessage("发行成功");
+        model.setData(bac002.getContractAddress());
+        return model;
+    }
+
 }
