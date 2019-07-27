@@ -308,6 +308,12 @@ public class UserServiceImpl implements UserService {
             return resultModel;
         }
         User user = userMapper.selectByPrimaryKey(uid);
+        System.out.println("---------------------------------");
+        System.out.println("---------------------------------");
+        System.out.println("---------------------------------");
+        System.out.println("UserServiceImpl.getImage");
+        System.out.println("getImage"+user);
+        System.out.println(user.getLevel());
         userModel.setLevel(user.getLevel());
         userModel.setBean(user.getBean());
 

@@ -3,6 +3,22 @@ package com.wego.entity;
 public class User {
     private Integer uid;
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "uid=" + uid +
+                ", name='" + name + '\'' +
+                ", account='" + account + '\'' +
+                ", pwd='" + pwd + '\'' +
+                ", bean=" + bean +
+                ", addr='" + addr + '\'' +
+                ", sk='" + sk + '\'' +
+                ", pk='" + pk + '\'' +
+                ", email='" + email + '\'' +
+                ", level=" + level +
+                '}';
+    }
+
     private String name;
 
     private String account;
@@ -100,4 +116,5 @@ public class User {
     public void setLevel(Integer level) {
         this.level = level;
     }
+
 }
