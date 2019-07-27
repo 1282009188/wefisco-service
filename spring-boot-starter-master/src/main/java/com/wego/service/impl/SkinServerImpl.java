@@ -2,12 +2,8 @@ package com.wego.service.impl;
 
 
 import com.wego.bacService.BACManager;
-import com.wego.dao.SkinMapper;
-import com.wego.dao.UserMapper;
-import com.wego.dao.UserskinMapper;
-import com.wego.entity.Skin;
-import com.wego.entity.User;
-import com.wego.entity.Userskin;
+import com.wego.dao.*;
+import com.wego.entity.*;
 import com.wego.model.ResultModel;
 import com.wego.service.SkinServer;
 import com.wego.service.UserServer;
@@ -20,13 +16,12 @@ import java.math.BigInteger;
 @Service("SkinServer")
 public class SkinServerImpl implements SkinServer {
     @Autowired
+    UserskinMapper userskinMapper;
+    @Autowired
     UserMapper userMapper;
 
     @Autowired
     SkinMapper skinMapper;
-
-    @Autowired
-    UserskinMapper userskinMapper;
 
     @Autowired
     UserServer userServer;
@@ -37,8 +32,18 @@ public class SkinServerImpl implements SkinServer {
     }
 
     @Override
-    public void useSkin(int uid, int pid, int sid) {
+    public ResultModel useSkin(int uid, int pid, int sid) {
+        ResultModel resultModel = new ResultModel();
+        Userskin userskin1 = userskinMapper.selectByUidUseSkin(uid);
+        if (userskin1 != null) {
+            userskin1.setState(0);
+            userskinMapper.updateByPrimaryKey(userskin1);
+        }
+        Userskin userskin2 = userskinMapper.selectByUidSid(uid, sid);
+        userskin2.setState(1);
+        userskinMapper.updateByPrimaryKey(userskin2);
 
+        return resultModel;
     }
 
     @Override
@@ -66,4 +71,6 @@ public class SkinServerImpl implements SkinServer {
 
         return resultModel;
     }
+
+
 }

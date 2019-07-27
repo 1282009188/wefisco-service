@@ -11,7 +11,7 @@ public interface SkinServer {
 
     ResultModel<Skin> showSkin(int uid);
 
-    void useSkin(int uid, int pid, int sid);
+    ResultModel useSkin(int uid, int pid, int sid);
 
     ResultModel buySkin(int uid, int sid);
 }

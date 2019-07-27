@@ -10,4 +10,6 @@ public interface PetMapper {
 
     List<Pet> selectAll();
 
+    Pet selectByPrimaryKey(int pid);
+
 }

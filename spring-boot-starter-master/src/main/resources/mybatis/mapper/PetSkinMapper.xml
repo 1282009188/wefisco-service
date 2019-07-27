@@ -1,14 +1,46 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.wego.dao.PetSkinMapper" >
-    <resultMap id="BaseResultMap" type="com.wego.entity.PetSkin" >
-        <id column="id" property="id" jdbcType="INTEGER" />
-        <result column="pid" property="pid" jdbcType="INTEGER" />
-        <result column="sid" property="sid" jdbcType="INTEGER" />
-        <result column="url" property="url" jdbcType="VARCHAR" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wego.dao.PetSkinMapper">
+    <resultMap id="BaseResultMap" type="com.wego.entity.PetSkin">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="pid" jdbcType="INTEGER" property="pid"/>
+        <result column="sid" jdbcType="INTEGER" property="sid"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
     </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from petskin
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.wego.entity.PetSkin">
+    insert into petskin (id, pid, sid, 
+      url)
+    values (#{id,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{sid,jdbcType=INTEGER}, 
+      #{url,jdbcType=VARCHAR})
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="com.wego.entity.PetSkin">
+    update petskin
+    set pid = #{pid,jdbcType=INTEGER},
+      sid = #{sid,jdbcType=INTEGER},
+      url = #{url,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, pid, sid, url
+    from petskin
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+    select id, pid, sid, url
+    from petskin
+  </select>
+
     <select id="selectByPidAndSid" resultMap="BaseResultMap">
         select * from petskin where pid=#{param1} and sid=#{param2}
     </select>
 
+    <select id="selectByPid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select *
+    from pet
+    where pid = #{pid,jdbcType=INTEGER}
+  </select>
 </mapper>

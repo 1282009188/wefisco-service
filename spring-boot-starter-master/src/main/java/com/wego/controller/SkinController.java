@@ -16,13 +16,13 @@ public class SkinController {
     @Autowired
     SkinServer skinServer;
 
-    /**
-     * 根据用户的id，宠物id，食物id喂食，同时增在宠物的col
-     * @param uid
-     * @return
-     */
     @PostMapping("skin/buyskin")
     ResultModel buyskin(@RequestParam Integer uid, @RequestParam Integer sid) {
-        return skinServer.buySkin(uid,sid);
+        return skinServer.buySkin(uid, sid);
+    }
+
+    @PostMapping("skin/useSkin")
+    ResultModel useskin(@RequestParam Integer uid, @RequestParam Integer pid, @RequestParam Integer sid) {
+        return skinServer.useSkin(uid, pid,sid);
     }
 }

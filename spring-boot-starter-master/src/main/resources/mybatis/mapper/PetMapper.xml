@@ -10,4 +10,9 @@
         select * from pet
     </select>
 
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select *
+    from pet
+    where pid = #{pid,jdbcType=INTEGER}
+  </select>
 </mapper>
