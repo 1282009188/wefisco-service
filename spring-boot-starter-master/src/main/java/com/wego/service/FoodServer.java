@@ -4,6 +4,7 @@ import com.wego.entity.Food;
 import com.wego.model.ResultModel;
 import com.wego.service.impl.FoodServerImpl;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface FoodServer {
@@ -13,7 +14,7 @@ public interface FoodServer {
      * @param uid
      * @return
      */
-    ResultModel<List<Food>> showFood(Integer uid);
+    ResultModel<HashMap<String,List<Food>>> showFood(Integer uid);
 
 
     /**
@@ -29,7 +30,7 @@ public interface FoodServer {
      * 用于显示所有的食物
      * @return
      */
-    ResultModel<List<Food>>getAllFood();
+    ResultModel<HashMap<String,List<Food>>>getAllFood();
 
     ResultModel buyFood(int uid, int fid,int num);
 

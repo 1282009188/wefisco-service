@@ -1,11 +1,13 @@
 package com.wego.controller;
 
+import com.wego.entity.Skin;
 import com.wego.model.ResultModel;
 import com.wego.service.SkinServer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author elizayuan
@@ -18,11 +20,19 @@ public class SkinController {
 
     /**
      * 根据用户的id，宠物id，食物id喂食，同时增在宠物的col
+     *
      * @param uid
      * @return
      */
     @PostMapping("skin/buyskin")
     ResultModel buyskin(@RequestParam Integer uid, @RequestParam Integer sid) {
-        return skinServer.buySkin(uid,sid);
+        return skinServer.buySkin(uid, sid);
+    }
+
+    @GetMapping("market/skin")
+    @ResponseBody
+    ResultModel<HashMap<String, List<Skin>>> marketSkin() {
+        return skinServer.marketSkin();
+
     }
 }

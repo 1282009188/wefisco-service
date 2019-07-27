@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service("FoodServer")
@@ -42,8 +43,8 @@ public class FoodServerImpl implements FoodServer {
      * @param uid
      * @return
      */
-    public ResultModel<List<Food>> showFood(Integer uid) {
-        ResultModel<List<Food>> resultModel = new ResultModel<>();
+    public ResultModel<HashMap<String,List<Food>>> showFood(Integer uid) {
+        ResultModel<HashMap<String,List<Food>>> resultModel = new ResultModel<>();
         if (uid == null) {
             resultModel.setCode(1);
             resultModel.setMessage("用户id为空");
@@ -67,9 +68,11 @@ public class FoodServerImpl implements FoodServer {
             foods.add(foodMapper.selectByPrimaryKey(fid));
 
         }
+        HashMap<String,List<Food>> hashMap=new HashMap<>();
+        hashMap.put("foodlist",foods);
         resultModel.setCode(0);
         resultModel.setMessage("查询成功");
-        resultModel.setData(foods);
+        resultModel.setData(hashMap);
         return resultModel;
     }
 
@@ -119,8 +122,8 @@ public class FoodServerImpl implements FoodServer {
      * @return
      */
 
-    public ResultModel<List<Food>> getAllFood() {
-        ResultModel<List<Food>> resultModel = new ResultModel<>();
+    public ResultModel<HashMap<String,List<Food>>> getAllFood() {
+        ResultModel<HashMap<String,List<Food>>> resultModel = new ResultModel<>();
         List<Food> foodList = foodMapper.selectAll();
         if (foodList == null || foodList.size() == 0) {
             resultModel.setCode(1);
@@ -129,7 +132,9 @@ public class FoodServerImpl implements FoodServer {
         }
         resultModel.setCode(0);
         resultModel.setMessage("查询成功");
-        resultModel.setData(foodList);
+        HashMap<String,List<Food>> hashMap=new HashMap<>();
+        hashMap.put("foodlist",foodList);
+        resultModel.setData(hashMap);
         return resultModel;
     }
 
