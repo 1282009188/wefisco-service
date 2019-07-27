@@ -17,4 +17,13 @@ public class BeanController {
     ResultModel transfer(@RequestParam String payerName, @RequestParam String payeeName, @RequestParam int amount) {
         return userService.transfer(payerName, payeeName, amount);
     }
+
+
+    @PostMapping("mechanism/bean")
+    @ResponseBody
+    @CrossOrigin(origins = "*")
+    ResultModel getMechanismBean(@RequestParam String account) {
+        return userService.getMechnismBeanByAccount(account);
+    }
+
 }

@@ -43,6 +43,15 @@ public interface UserService {
      * @return
      */
     ResultModel<User> showInfo(Integer integer);
+
+
+    /***
+     * 查询机构用户健康豆，
+     * @param account
+     * @return
+     */
+    ResultModel<User> getMechnismBeanByAccount(String  account);
+
     /***
      * 根据用户id去查找皮肤id
      * @param uid

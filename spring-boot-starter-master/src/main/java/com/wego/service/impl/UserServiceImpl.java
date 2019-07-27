@@ -158,8 +158,8 @@ public class UserServiceImpl implements UserService {
             level = (int) (Math.log(temp) / Math.log(10)) + 1;
         }
 
-        userMapper.updateByPrimaryKey(user);
         user.setLevel(level);
+        userMapper.updateByPrimaryKey(user);
         user.setSk(null);
         user.setPk(null);
         user.setAddr(null);
@@ -168,6 +168,40 @@ public class UserServiceImpl implements UserService {
         resultModel.setData(user);
         return resultModel;
     }
+
+    @Override
+    public ResultModel<User> getMechnismBeanByAccount(String account) {
+        ResultModel<User> resultModel = new ResultModel<User>();
+        if (account == null) {
+            resultModel.setCode(1);
+            resultModel.setMessage("不能为空");
+            return resultModel;
+        }
+        User user = userMapper.selectByName(account);
+        if (user == null) {
+            resultModel.setCode(1);
+            resultModel.setMessage("该账户不存在");
+            return resultModel;
+        }
+        int level = 0;
+        if (user.getBean() != 0) {
+            int temp = user.getBean() / 1000;
+            level = (int) (Math.log(temp) / Math.log(10)) + 1;
+        }
+
+        user.setLevel(level);
+        userMapper.updateByPrimaryKey(user);
+        user.setSk(null);
+        user.setPk(null);
+        user.setAddr(null);
+        resultModel.setCode(0);
+        resultModel.setMessage("查询成功");
+        resultModel.setData(user);
+        return resultModel;
+    }
+
+
+
 
     /**
      * 查询该用户有多少食物
