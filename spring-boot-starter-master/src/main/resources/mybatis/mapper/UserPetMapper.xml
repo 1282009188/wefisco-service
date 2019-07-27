@@ -11,7 +11,7 @@
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from userpet
-    where pid = #{pid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.wego.entity.UserPet" >
     insert into userpet (pid, pname, uid, col,url)
@@ -23,12 +23,12 @@
     set pname = #{pname,jdbcType=VARCHAR},
       uid = #{uid,jdbcType=INTEGER},
       col = #{col,jdbcType=INTEGER}
-    where pid = #{pid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select pid, pname, uid, col,url
     from userpet
-    where pid = #{pid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select pid, pname, uid, col,url
@@ -38,7 +38,7 @@
     update userpet
     set
       col = #{param2,jdbcType=INTEGER}
-    where pid = #{param1,jdbcType=INTEGER}
+    where id = #{param1,jdbcType=INTEGER}
   </update>
   <select id="selectByUid" resultMap="BaseResultMap" >
     select id,pid, pname, uid, col,url
