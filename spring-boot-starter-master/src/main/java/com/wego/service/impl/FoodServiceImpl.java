@@ -21,6 +21,9 @@ public class FoodServiceImpl implements FoodService {
     UserMapper userMapper;
     @Autowired
     UserfoodMapper userfoodMapper;
+
+    @Autowired
+    UserPetMapper userPetMapper;
     @Autowired
     FoodMapper foodMapper;
     @Autowired
@@ -39,8 +42,8 @@ public class FoodServiceImpl implements FoodService {
      * @param uid
      * @return
      */
-    public ResultModel<HashMap<String,List<Food>>> showFood(Integer uid) {
-        ResultModel<HashMap<String,List<Food>>> resultModel = new ResultModel<>();
+    public ResultModel<HashMap<String,List<ShowFood>>> showFood(Integer uid) {
+        ResultModel<HashMap<String,List<ShowFood>>> resultModel = new ResultModel<>();
         if (uid == null) {
             resultModel.setCode(1);
             resultModel.setMessage("用户id为空");
@@ -64,8 +67,28 @@ public class FoodServiceImpl implements FoodService {
             foods.add(foodMapper.selectByPrimaryKey(fid));
 
         }
-        HashMap<String,List<Food>> hashMap=new HashMap<>();
-        hashMap.put("foodlist",foods);
+        HashMap<String,List<ShowFood>> hashMap=new HashMap<>();
+
+        List<ShowFood> showFoodsList=new ArrayList<>();
+
+        for(int i=0;i<foods.size();i++)
+        {
+            HashMap temp=new HashMap<>();
+            Food tempfood=foods.get(i);
+
+            Userfood tempuserfood=userfoodMapper.selectByUidAndFid(uid,tempfood.getFid());
+
+            ShowFood showFood=new ShowFood();
+            showFood.setBean(tempfood.getBean());
+            showFood.setCol(tempfood.getCol());
+            showFood.setFid(tempfood.getFid());
+            showFood.setFname(tempfood.getFname());
+            showFood.setNum(tempuserfood.getNum());
+
+            showFood.setUrl(tempfood.getUrl());
+            showFoodsList.add(showFood);
+        }
+        hashMap.put("foodlist",showFoodsList);
         resultModel.setCode(0);
         resultModel.setMessage("查询成功");
         resultModel.setData(hashMap);
@@ -94,8 +117,10 @@ public class FoodServiceImpl implements FoodService {
         //根据食物id去查找食物的卡路里
         Food food = foodMapper.selectByPrimaryKey(fid);
         int col = food.getCol();
+
         //修改宠物的col
-        UserPet pet = petMapper.selectByPrimaryKey(pid);
+        UserPet pet = userPetMapper.selectByUidAndPid(uid,pid);
+
         if (pet == null) {
             resultModel.setCode(1);
             resultModel.setMessage("宠物不存在");

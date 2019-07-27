@@ -47,10 +47,10 @@
         <!-- 配置表信息 -->
         <!-- schema即为数据库名 tableName为对应的数据库表 domainObjectName是要生成的实体类 enable*ByExample
             是否生成 example类 -->
-        <table schema="" tableName="trade"
-               domainObjectName="Trade" enableCountByExample="true"
-               enableDeleteByExample="true" enableSelectByExample="true"
-               enableUpdateByExample="true">
+        <table schema="" tableName="food"
+               domainObjectName="Food" enableCountByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               enableUpdateByExample="false">
             <generatedKey column="epa_id" sqlStatement="Mysql" identity="true" />
         </table>
     </context>

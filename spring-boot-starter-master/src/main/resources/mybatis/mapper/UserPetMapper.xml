@@ -44,4 +44,10 @@
     select id,pid, pname, uid, col,url
     from userpet where uid=#{uid}
   </select>
+
+  <select id="selectByUidAndPid" resultMap="BaseResultMap" >
+    select * from userpet where uid=#{param1} and pid=#{param2}
+  </select>
+
+
 </mapper>

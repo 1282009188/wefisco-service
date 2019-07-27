@@ -24,7 +24,7 @@ public class SkinController {
         return skinService.buySkin(uid, sid);
     }
 
-    @PostMapping("skin/useSkin")
+    @PostMapping("skin/useskin")
     @CrossOrigin(origins = "*")
     ResultModel useskin(@RequestParam Integer uid, @RequestParam Integer pid, @RequestParam Integer sid) {
         return skinService.useSkin(uid, pid,sid);

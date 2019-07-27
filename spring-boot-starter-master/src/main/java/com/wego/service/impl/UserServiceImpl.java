@@ -173,9 +173,10 @@ public class UserServiceImpl implements UserService {
 
         user.setLevel(level);
         userMapper.updateByPrimaryKey(user);
-        user.setSk(null);
-        user.setPk(null);
-        user.setAddr(null);
+//        user.setSk(null);
+//        user.setPk(null);
+       // user.setAddr(null);
+        user.setAccount(user.getName());
         resultModel.setCode(0);
         resultModel.setMessage("查询成功");
         resultModel.setData(user);

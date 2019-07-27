@@ -1,6 +1,7 @@
 package com.wego.controller;
 
 import com.wego.entity.Food;
+import com.wego.entity.ShowFood;
 import com.wego.model.ResultModel;
 import com.wego.service.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class FoodController {
      */
     @GetMapping("user/showfood")
     @ResponseBody
-    ResultModel<HashMap<String,List<Food>>> showfood(Integer uid) {
+    ResultModel<HashMap<String,List<ShowFood>>> showfood(Integer uid) {
         return foodService.showFood(uid);
     }
 

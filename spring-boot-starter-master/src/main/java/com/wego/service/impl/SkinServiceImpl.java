@@ -34,14 +34,28 @@ public class SkinServiceImpl implements SkinService {
     @Override
     public ResultModel useSkin(int uid, int pid, int sid) {
         ResultModel resultModel = new ResultModel();
+        resultModel.setCode(0);
+        resultModel.setMessage("使用成功！");
         Userskin userskin1 = userskinMapper.selectByUidUseSkin(uid);
         if (userskin1 != null) {
             userskin1.setState(0);
             userskinMapper.updateByPrimaryKey(userskin1);
+        }else
+        {
+            resultModel.setCode(1);
+            resultModel.setMessage("不存在任何皮肤");
         }
         Userskin userskin2 = userskinMapper.selectByUidSid(uid, sid);
-        userskin2.setState(1);
-        userskinMapper.updateByPrimaryKey(userskin2);
+        if(userskin2!=null)
+        {
+            userskin2.setState(1);
+            userskinMapper.updateByPrimaryKey(userskin2);
+
+        }else
+        {
+            resultModel.setCode(1);
+            resultModel.setMessage("记录不存在");
+        }
 
         return resultModel;
     }
