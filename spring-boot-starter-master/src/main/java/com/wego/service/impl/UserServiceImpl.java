@@ -322,6 +322,7 @@ public class UserServiceImpl implements UserService {
         userModel.setUrl(pet.getUrl());
         userModel.setPetname(pet.getPname());
         userModel.setPid(pet.getPid());
+        userModel.setCol(pet.getCol());
         if (userskin == null) {
             userModel.setPid(pet.getPid());
             userModel.setUrl(pet.getUrl());
