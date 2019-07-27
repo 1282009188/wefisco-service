@@ -1,15 +1,17 @@
 package com.wego.service.impl;
 
+import com.wego.bacService.BACManager;
 import com.wego.dao.*;
-import com.wego.entity.Food;
-import com.wego.entity.Pet;
-import com.wego.entity.Userfood;
+import com.wego.entity.*;
 import com.wego.model.ResultModel;
 import com.wego.service.FoodServer;
+import com.wego.service.UserServer;
+import org.fisco.bcos.BAC001;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +29,9 @@ public class FoodServerImpl implements FoodServer {
     SkinMapper skinMapper;
     @Autowired
     PetMapper petMapper;
+
+    @Autowired
+    UserServer userServer;
 
     /**
      * 查询该用户有多少食物
@@ -114,7 +119,7 @@ public class FoodServerImpl implements FoodServer {
     public ResultModel<List<Food>> getAllFood() {
         ResultModel<List<Food>> resultModel = new ResultModel<>();
         List<Food> foodList = foodMapper.selectAll();
-        if(foodList==null||foodList.size()==0){
+        if (foodList == null || foodList.size() == 0) {
             resultModel.setCode(1);
             resultModel.setMessage("该商场还没有任何的食物，敬请期待");
             return resultModel;
@@ -125,4 +130,25 @@ public class FoodServerImpl implements FoodServer {
         return resultModel;
     }
 
+    @Override
+    public ResultModel buyFood(int uid, int fid, int num) {
+        User user = userMapper.selectByPrimaryKey(uid);
+        Food food = foodMapper.selectByPrimaryKey(fid);
+        int price = food.getBean() * num;
+        ResultModel resultModel = userServer.transfer(user.getName(),"wego",price);
+        //2.加食物
+        Userfood uf = userfoodMapper.selectByUidAndFid(uid, fid);
+        if (uf == null) {
+            uf = new Userfood();
+            uf.setUid(uid);
+            uf.setFid(fid);
+            uf.setNum(num);
+            userfoodMapper.insert(uf);
+        } else {
+            uf.setNum(uf.getNum() + num);
+            userfoodMapper.updateByPrimaryKey(uf);
+        }
+
+        return resultModel;
+    }
 }

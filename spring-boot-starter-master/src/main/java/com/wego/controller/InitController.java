@@ -40,10 +40,10 @@ public class InitController {
         ChannelEthereumService channelEthereumService = new ChannelEthereumService();
         channelEthereumService.setChannelService(service);
         Web3j web3j = Web3j.build(channelEthereumService, service.getGroupId());
-        BAC001 bac001 = BAC001.deploy(web3j, Credentials.create("77fda4a212c4f285347b0275527b0f9087e47f010af2fdc680143e8ffa47ac94"), contractGasProvider, "健康豆资产发布", "health bean", BigInteger.valueOf(1), BigInteger.valueOf(1000000000)).send();
-        bac001.send("0x0f8da6226f64d30f6ba0169d264552a4ab2df331", BigInteger.valueOf(1000000000), "wego发行十亿健康豆").send();
         User wego = userMapper.selectByName("wego");
-        wego.setBean(1000000000);
+        //wego发行资产
+        BAC001 bac001 = BAC001.deploy(web3j, Credentials.create(wego.getSk()), contractGasProvider, "健康豆资产发布", "health bean", BigInteger.valueOf(1), BigInteger.valueOf(10000)).send();
+        wego.setBean(bac001.balance(wego.getAddr()).send().intValue());
         userMapper.updateByPrimaryKey(wego);
         ResultModel model = new ResultModel();
         model.setMessage("发行成功");

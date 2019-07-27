@@ -31,4 +31,6 @@ public interface FoodServer {
      */
     ResultModel<List<Food>>getAllFood();
 
+    ResultModel buyFood(int uid, int fid,int num);
+
 }

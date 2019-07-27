@@ -10,6 +10,7 @@ import com.wego.entity.User;
 import com.wego.entity.Userskin;
 import com.wego.model.ResultModel;
 import com.wego.service.SkinServer;
+import com.wego.service.UserServer;
 import org.fisco.bcos.BAC001;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,9 @@ public class SkinServerImpl implements SkinServer {
     @Autowired
     UserskinMapper userskinMapper;
 
+    @Autowired
+    UserServer userServer;
+
     @Override
     public ResultModel<Skin> showSkin(int uid) {
         return null;
@@ -42,40 +46,24 @@ public class SkinServerImpl implements SkinServer {
         ResultModel resultModel = new ResultModel();
         User user = userMapper.selectByPrimaryKey(uid);
         Skin skin = skinMapper.selectByPrimaryKey(sid);
-        //1.查用户余额够不够
-        if (user.getBean() < skin.getBean()) {
-            resultModel.setCode(1);
-            resultModel.setMessage("余额不足");
-            return resultModel;
-        }
-        //2.查是否已有该皮肤
+
+        //1.查是否已有该皮肤
         Userskin userskin = userskinMapper.selectByUidSid(uid, sid);
         if (userskin != null) {
             resultModel.setCode(1);
             resultModel.setMessage("不能重复购买");
             return resultModel;
         }
-        //3.扣积分，加皮肤
-        user.setBean(user.getBean() - skin.getBean());
-        userMapper.updateByPrimaryKey(user);
+        //2.扣钱
+        resultModel = userServer.transfer(user.getName(), "wego", skin.getBean());
+
+        //3. 加皮肤
         Userskin us = new Userskin();
         us.setUid(uid);
         us.setSid(sid);
         us.setState(0);
         userskinMapper.insert(us);
-        //4.积分转入WeGo账户
-        BAC001 bac001 = BACManager.getBAC001(user);
-        User wego = userMapper.selectByName("wego");
-        try {
-            bac001.send(wego.getAddr(), BigInteger.valueOf(skin.getBean()), "交易健康豆").send();
-            wego.setBean(wego.getBean() + skin.getBean());
-            userMapper.updateByPrimaryKey(wego);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        resultModel.setCode(0);
-        resultModel.setMessage("购买成功");
         return resultModel;
     }
 }

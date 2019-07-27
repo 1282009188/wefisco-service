@@ -12,6 +12,7 @@ import java.util.List;
 public class FoodController {
     @Autowired
     FoodServer foodServer;
+
     /**
      * 根据用户的id，宠物id，食物id喂食，同时增在宠物的col
      *
@@ -27,6 +28,7 @@ public class FoodController {
 
     /**
      * 查看该用户拥有的食物
+     *
      * @param uid
      * @return
      */
@@ -38,11 +40,24 @@ public class FoodController {
 
     /**
      * 查询所有的食物
+     *
      * @return
      */
     @GetMapping("market/food")
     @ResponseBody
-    ResultModel<List<Food>> showMarketFood(){
+    ResultModel<List<Food>> showMarketFood() {
         return foodServer.getAllFood();
     }
+
+    /**
+     * 根据用户的id，宠物id，食物id喂食，同时增在宠物的col
+     *
+     * @param uid
+     * @return
+     */
+    @PostMapping("user/buyfood")
+    ResultModel buyfood(@RequestParam Integer uid, @RequestParam Integer fid, @RequestParam Integer num) {
+        return foodServer.buyFood(uid, fid, num);
+    }
+
 }

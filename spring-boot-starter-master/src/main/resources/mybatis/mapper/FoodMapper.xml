@@ -35,4 +35,6 @@
     select fid, fname, bean, col, url
     from food
   </select>
+
+
 </mapper>

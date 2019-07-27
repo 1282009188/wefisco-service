@@ -210,19 +210,20 @@ public class UserServerImpl implements UserServer {
             return resultModel;
         }
         //1.支付方减豆，收款方加豆，上链
-        payer.setBean(payer.getBean() - amount);
-        payee.setBean(payee.getBean() + amount);
-        userMapper.updateByPrimaryKey(payer);
-        userMapper.updateByPrimaryKey(payee);
         BAC001 bac001 = BACManager.getBAC001(payer);
         try {
             bac001.send(payee.getAddr(), BigInteger.valueOf(amount), "交易健康豆").send();
+            int payerBean = bac001.balance(payer.getAddr()).send().intValue();
+            int payeeBean = bac001.balance(payee.getAddr()).send().intValue();
+            payer.setBean(payerBean);
+            payee.setBean(payeeBean);
+            userMapper.updateByPrimaryKey(payer);
+            userMapper.updateByPrimaryKey(payee);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         resultModel.setCode(0);
-        resultModel.setMessage("转账成功");
+        resultModel.setMessage("交易成功");
         return resultModel;
     }
 

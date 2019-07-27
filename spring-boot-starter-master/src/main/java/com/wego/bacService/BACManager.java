@@ -26,7 +26,7 @@ public class BACManager {
         return instance;
     }
 
-    public static final String contractAddress ="0x89975e7bc228e461460f016917a12ab7093364c4";
+    public static final String contractAddress ="0x34f392e50b1f7b8799318a1db933c8b42b7ba15f";
 
     public static BAC001 getBAC001(User user) {
         BigInteger gasPrice = new BigInteger("1");
