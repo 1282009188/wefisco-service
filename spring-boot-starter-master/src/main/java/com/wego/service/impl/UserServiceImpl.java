@@ -88,25 +88,28 @@ public class UserServiceImpl implements UserService {
         user.setLevel(0);
         userMapper.insert(user);
 
-        //随机为用户分配一个企鹅
-        Pet pet = petMapper.selectByPrimaryKey(1);
-        //插入企鹅数据到userpet表中
-        UserPet userPet = new UserPet();
-        userPet.setCol(0);
-        userPet.setPid(pet.getPid());
-        userPet.setPname(pet.getName());
-        userPet.setUrl(pet.getUrl());
-        userPet.setUid(user.getUid());
-        userpetMapper.insert(userPet);
+        if(userpetMapper.selectByUid(user.getUid())==null) {
+            //随机为用户分配一个企鹅
+            Pet pet = petMapper.selectByPrimaryKey(1);
+            //插入企鹅数据到userpet表中
+            UserPet userPet = new UserPet();
+            userPet.setCol(0);
+            userPet.setPid(pet.getPid());
+            userPet.setPname(pet.getName());
+            userPet.setUrl(pet.getUrl());
+            userPet.setUid(user.getUid());
+            userpetMapper.insert(userPet);
 
-        //生成企鹅资产
-        user = userMapper.selectByName(name);
-        User wego = userMapper.selectByName("wego");
-        BAC002 bac002 = BACManager.getBAC002(wego);
-        bac002.issueWithAssetURI(user.getAddr(), BigInteger.valueOf(userPet.getId()),
-                "this is a pet information url is www."
-                        + pet.getName() + ".com",
-                (user.getName() + "get a pet").getBytes()).send();
+            //生成企鹅资产
+            user = userMapper.selectByName(name);
+            User wego = userMapper.selectByName("wego");
+            BAC002 bac002 = BACManager.getBAC002(wego);
+            bac002.issueWithAssetURI(user.getAddr(), BigInteger.valueOf(userPet.getId()),
+                    "this is a pet information url is www."
+                            + pet.getName() + ".com",
+                    (user.getName() + "get a pet").getBytes()).send();
+
+        }
         resultModel.setCode(0);
         resultModel.setMessage("注册成功");
         return resultModel;
@@ -309,11 +312,16 @@ public class UserServiceImpl implements UserService {
         userModel.setBean(user.getBean());
 
         //去查找用户的id去查找宠物信息,目前只能有一只
-        UserPet pet = userpetMapper.selectByUid(uid);
-        if (pet == null) {
+        List<UserPet> petlist = userpetMapper.selectByUid(uid);
+        UserPet pet=null;
+        if (petlist.size()==0) {
             resultModel.setCode(1);
             resultModel.setMessage("宠物为空");
             return resultModel;
+        }
+        else
+        {
+            pet=petlist.get(0);
         }
         //查找已经穿戴好的皮肤
         Userskin userskin = userskinMapper.selectByUidUseSkin(uid);

@@ -31,7 +31,7 @@ public interface UserPetMapper {
      * @param uid
      * @return
      */
-    UserPet selectByUid(Integer uid);
+    List<UserPet> selectByUid(Integer uid);
 
 
     /**
