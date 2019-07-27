@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -121,7 +122,7 @@ public class UserServiceImpl implements UserService {
      * @return 0为空，1为账户不存在，2为密码错误，3为登录成功
      */
     public ResultModel login(String name, String pwd) {
-        ResultModel<Integer> resultModel = new ResultModel<Integer>();
+        ResultModel<HashMap<String,Integer>> resultModel = new ResultModel<>();
         if (name.equals("") || pwd.equals("")) {
             resultModel.setCode(1);
             resultModel.setMessage("用户名和密码不能为空");
@@ -139,7 +140,9 @@ public class UserServiceImpl implements UserService {
         }
         resultModel.setCode(0);
         resultModel.setMessage("登录成功");
-        resultModel.setData(userMapper.selectByName(name).getUid());
+        HashMap<String,Integer> hashMap=new HashMap<>();
+        hashMap.put("uid",userMapper.selectByName(name).getUid());
+        resultModel.setData(hashMap);
         return resultModel;
     }
 
@@ -150,7 +153,7 @@ public class UserServiceImpl implements UserService {
      * @return 用户信息
      */
     public ResultModel<User> showInfo(Integer uid) {
-        ResultModel<User> resultModel = new ResultModel<User>();
+        ResultModel<User> resultModel = new ResultModel<>();
         if (uid == null) {
             resultModel.setCode(1);
             resultModel.setMessage("不能为空");
@@ -217,8 +220,8 @@ public class UserServiceImpl implements UserService {
      * @param uid
      * @return
      */
-    public ResultModel<List<Skin>> showSkin(Integer uid) {
-        ResultModel<List<Skin>> resultModel = new ResultModel<>();
+    public ResultModel<HashMap<String,List<Skin>>> showSkin(Integer uid) {
+        ResultModel<HashMap<String,List<Skin>>> resultModel = new ResultModel<>();
         if (uid == null) {
             resultModel.setCode(1);
             resultModel.setMessage("用户id为空");
@@ -244,7 +247,9 @@ public class UserServiceImpl implements UserService {
         }
         resultModel.setCode(0);
         resultModel.setMessage("查询皮肤成功");
-        resultModel.setData(skins);
+        HashMap<String,List<Skin>> hashMap=new HashMap<>();
+        hashMap.put("skinlist",skins);
+        resultModel.setData(hashMap);
         return resultModel;
     }
 

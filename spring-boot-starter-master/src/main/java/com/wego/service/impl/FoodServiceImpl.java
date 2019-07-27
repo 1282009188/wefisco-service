@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service("FoodServer")
@@ -38,8 +39,8 @@ public class FoodServiceImpl implements FoodService {
      * @param uid
      * @return
      */
-    public ResultModel<List<Food>> showFood(Integer uid) {
-        ResultModel<List<Food>> resultModel = new ResultModel<>();
+    public ResultModel<HashMap<String,List<Food>>> showFood(Integer uid) {
+        ResultModel<HashMap<String,List<Food>>> resultModel = new ResultModel<>();
         if (uid == null) {
             resultModel.setCode(1);
             resultModel.setMessage("用户id为空");
@@ -63,9 +64,11 @@ public class FoodServiceImpl implements FoodService {
             foods.add(foodMapper.selectByPrimaryKey(fid));
 
         }
+        HashMap<String,List<Food>> hashMap=new HashMap<>();
+        hashMap.put("foodlist",foods);
         resultModel.setCode(0);
         resultModel.setMessage("查询成功");
-        resultModel.setData(foods);
+        resultModel.setData(hashMap);
         return resultModel;
     }
 
@@ -115,8 +118,8 @@ public class FoodServiceImpl implements FoodService {
      * @return
      */
 
-    public ResultModel<List<Food>> getAllFood() {
-        ResultModel<List<Food>> resultModel = new ResultModel<>();
+    public ResultModel<HashMap<String,List<Food>>> getAllFood() {
+        ResultModel<HashMap<String,List<Food>>> resultModel = new ResultModel<>();
         List<Food> foodList = foodMapper.selectAll();
         if (foodList == null || foodList.size() == 0) {
             resultModel.setCode(1);
@@ -125,7 +128,9 @@ public class FoodServiceImpl implements FoodService {
         }
         resultModel.setCode(0);
         resultModel.setMessage("查询成功");
-        resultModel.setData(foodList);
+        HashMap<String,List<Food>> hashMap=new HashMap<>();
+        hashMap.put("foodlist",foodList);
+        resultModel.setData(hashMap);
         return resultModel;
     }
 

@@ -9,6 +9,10 @@ import com.wego.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
+import java.util.HashMap;
+import java.util.List;
+
 @Service("SkinServer")
 public class SkinServiceImpl implements SkinService {
     @Autowired
@@ -68,5 +72,17 @@ public class SkinServiceImpl implements SkinService {
         return resultModel;
     }
 
-
+    public ResultModel<HashMap<String, List<Skin>>> marketSkin(){
+        ResultModel<HashMap<String, List<Skin>>> resultModel=new ResultModel<>();
+        List<Skin> skins=skinMapper.selectAll();
+        if (skins==null||skins.size()==0){
+            resultModel.setCode(1);
+            resultModel.setMessage("还没有任何皮肤，敬请期待");
+            return resultModel;
+        }
+        HashMap<String, List<Skin>> hashMap=new HashMap<>();
+        hashMap.put("skinlist",skins);
+        resultModel.setData(hashMap);
+        return resultModel;
+    }
 }

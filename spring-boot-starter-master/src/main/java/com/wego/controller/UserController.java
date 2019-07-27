@@ -9,6 +9,7 @@ import com.wego.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -65,8 +66,7 @@ public class UserController {
 
     @GetMapping("user/showskin")
     @ResponseBody
-    @CrossOrigin(origins = "*")
-    ResultModel<List<Skin>> showskin(Integer uid) {
+    ResultModel<HashMap<String,List<Skin>>> showskin(Integer uid) {
         return userService.showSkin(uid);
     }
 

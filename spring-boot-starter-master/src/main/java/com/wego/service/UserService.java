@@ -57,7 +57,7 @@ public interface UserService {
      * @param uid
      * @return
      */
-    ResultModel< List<Skin>> showSkin(Integer uid);
+    ResultModel< HashMap<String,List<Skin>>> showSkin(Integer uid);
 
     /**
      * 根据用户去查找用户信息以及其企鹅信息

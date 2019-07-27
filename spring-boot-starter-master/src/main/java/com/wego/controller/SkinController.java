@@ -1,12 +1,13 @@
 package com.wego.controller;
 
+import com.wego.entity.Skin;
 import com.wego.model.ResultModel;
 import com.wego.service.SkinService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author elizayuan
@@ -27,5 +28,12 @@ public class SkinController {
     @CrossOrigin(origins = "*")
     ResultModel useskin(@RequestParam Integer uid, @RequestParam Integer pid, @RequestParam Integer sid) {
         return skinService.useSkin(uid, pid,sid);
+    }
+
+    @GetMapping("market/skin")
+    @ResponseBody
+    ResultModel<HashMap<String, List<Skin>>> marketSkin() {
+        return skinService.marketSkin();
+
     }
 }

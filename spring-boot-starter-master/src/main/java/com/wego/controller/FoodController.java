@@ -6,6 +6,7 @@ import com.wego.service.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -35,8 +36,7 @@ public class FoodController {
      */
     @GetMapping("user/showfood")
     @ResponseBody
-    @CrossOrigin(origins = "*")
-    ResultModel<List<Food>> showfood(Integer uid) {
+    ResultModel<HashMap<String,List<Food>>> showfood(Integer uid) {
         return foodService.showFood(uid);
     }
 
@@ -47,8 +47,7 @@ public class FoodController {
      */
     @GetMapping("market/food")
     @ResponseBody
-    @CrossOrigin(origins = "*")
-    ResultModel<List<Food>> showMarketFood() {
+    ResultModel<HashMap<String,List<Food>>> showMarketFood() {
         return foodService.getAllFood();
     }
 
