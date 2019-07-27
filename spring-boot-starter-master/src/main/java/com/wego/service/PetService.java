@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface PetService {
     ResultModel<HashMap<String,List<Pet>>> showMarketPet();
+
+    ResultModel changePet(int uid,int pid,String name);
 }

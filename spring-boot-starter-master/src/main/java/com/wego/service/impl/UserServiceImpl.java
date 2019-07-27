@@ -89,9 +89,7 @@ public class UserServiceImpl implements UserService {
         userMapper.insert(user);
 
         //随机为用户分配一个企鹅
-        List<Pet> list = petMapper.selectAll();
-        Random random = new Random();
-        Pet pet = list.get(random.nextInt(list.size()));
+        Pet pet = petMapper.selectByPrimaryKey(1);
         //插入企鹅数据到userpet表中
         UserPet userPet = new UserPet();
         userPet.setCol(0);
