@@ -4,7 +4,7 @@ public class ShowFood {
     private Integer fid;
 
     private Integer num;
-    private String fname;
+    private String foodname;
 
     private Integer bean;
 
@@ -20,12 +20,12 @@ public class ShowFood {
         this.fid = fid;
     }
 
-    public String getFname() {
-        return fname;
+    public String getFoodname() {
+        return foodname;
     }
 
-    public void setFname(String fname) {
-        this.fname = fname;
+    public void setFoodname(String foodname) {
+        this.foodname = foodname;
     }
 
     public Integer getBean() {

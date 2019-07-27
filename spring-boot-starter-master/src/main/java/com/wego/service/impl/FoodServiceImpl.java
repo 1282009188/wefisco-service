@@ -82,7 +82,7 @@ public class FoodServiceImpl implements FoodService {
             showFood.setBean(tempfood.getBean());
             showFood.setCol(tempfood.getCol());
             showFood.setFid(tempfood.getFid());
-            showFood.setFname(tempfood.getFname());
+            showFood.setFoodname(tempfood.getFname());
             showFood.setNum(tempuserfood.getNum());
 
             showFood.setUrl(tempfood.getUrl());
