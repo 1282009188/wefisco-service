@@ -275,7 +275,12 @@ public class UserServiceImpl implements UserService {
             return resultModel;
         }
         //1.支付方减豆，收款方加豆，上链
-        BAC001 bac001 = BACManager.getBAC001(payer);
+        BAC001 bac001 = null;
+        try {
+            bac001 = BACManager.getBAC001(payer);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         try {
             bac001.send(payee.getAddr(), BigInteger.valueOf(amount), "交易健康豆").send();
             int payerBean = bac001.balance(payer.getAddr()).send().intValue();

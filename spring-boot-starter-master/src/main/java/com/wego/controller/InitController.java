@@ -17,6 +17,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @RestController
 public class InitController {
@@ -45,6 +48,15 @@ public class InitController {
         ResultModel model = new ResultModel();
         model.setMessage("发行成功");
         model.setData(bac001.getContractAddress());
+
+        //记录合约
+        Path rootLocation = Paths.get("folder");
+        if(Files.notExists(rootLocation)){
+            Files.createDirectories(rootLocation);
+        }
+        Path path = rootLocation.resolve("bac001.txt");
+        byte[] strToBytes = bac001.getContractAddress().getBytes();
+        Files.write(path, strToBytes);
         return model;
     }
 
@@ -67,6 +79,15 @@ public class InitController {
         ResultModel model = new ResultModel();
         model.setMessage("发行成功");
         model.setData(bac002.getContractAddress());
+
+        //记录合约
+        Path rootLocation = Paths.get("folder");
+        if(Files.notExists(rootLocation)){
+            Files.createDirectories(rootLocation);
+        }
+        Path path = rootLocation.resolve("bac002.txt");
+        byte[] strToBytes = bac002.getContractAddress().getBytes();
+        Files.write(path, strToBytes);
         return model;
     }
 
