@@ -30,8 +30,6 @@ public class FoodServiceImpl implements FoodService {
     UserskinMapper userskinMapper;
     @Autowired
     SkinMapper skinMapper;
-    @Autowired
-    UserPetMapper petMapper;
 
     @Autowired
     UserService userService;
@@ -127,7 +125,7 @@ public class FoodServiceImpl implements FoodService {
             return resultModel;
         }
         pet.setCol(col + pet.getCol());
-        petMapper.updateByPrimaryKey(pet);
+        userPetMapper.updateByPrimaryKey(pet);
         //减少食物的数量
         userfood.setNum(userfood.getNum() - 1);
         userfoodMapper.updateByPrimaryKey(userfood);
