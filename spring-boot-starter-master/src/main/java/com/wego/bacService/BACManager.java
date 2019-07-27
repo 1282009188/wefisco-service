@@ -14,6 +14,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.math.BigInteger;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class BACManager {
     //创建 SingleObject 的一个对象
@@ -28,11 +31,8 @@ public class BACManager {
         return instance;
     }
 
-    public static final String contractAddress = "0x6b63df7664b356e68d55cf9aa9708b74a980c9b3";
 
-    public static final String BAC002contractAddress = "0x34f392e50b1f7b8799318a1db933c8b42b7ba15f";
-
-    public static BAC001 getBAC001(User user) {
+    public static BAC001 getBAC001(User user) throws Exception {
         BigInteger gasPrice = new BigInteger("1");
         BigInteger gasLimit = new BigInteger("2100000000");
         ContractGasProvider contractGasProvider = new StaticGasProvider(gasPrice, gasLimit);
@@ -47,11 +47,14 @@ public class BACManager {
         ChannelEthereumService channelEthereumService = new ChannelEthereumService();
         channelEthereumService.setChannelService(service);
         Web3j web3j = Web3j.build(channelEthereumService, service.getGroupId());
-        return BAC001.load(contractAddress, web3j, Credentials.create(user.getSk()), contractGasProvider);
+
+        Path rootLocation = Paths.get("folder");
+        Path path = rootLocation.resolve("bac001.txt");
+        return BAC001.load(new String(Files.readAllBytes(path)), web3j, Credentials.create(user.getSk()), contractGasProvider);
     }
 
     @Test
-    public static BAC002 getBAC002(User user) {
+    public static BAC002 getBAC002(User user) throws Exception {
         BigInteger gasPrice = new BigInteger("1");
         BigInteger gasLimit = new BigInteger("2100000000");
         ContractGasProvider contractGasProvider = new StaticGasProvider(gasPrice, gasLimit);
@@ -65,6 +68,9 @@ public class BACManager {
         ChannelEthereumService channelEthereumService = new ChannelEthereumService();
         channelEthereumService.setChannelService(service);
         Web3j web3j = Web3j.build(channelEthereumService, service.getGroupId());
-        return BAC002.load(BAC002contractAddress, web3j, Credentials.create(user.getSk()), contractGasProvider);
+
+        Path rootLocation = Paths.get("folder");
+        Path path = rootLocation.resolve("bac002.txt");
+        return BAC002.load(new String(Files.readAllBytes(path)), web3j, Credentials.create(user.getSk()), contractGasProvider);
     }
 }
