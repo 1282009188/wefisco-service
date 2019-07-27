@@ -2,7 +2,7 @@ package com.wego.controller;
 
 import com.wego.entity.Food;
 import com.wego.model.ResultModel;
-import com.wego.service.FoodServer;
+import com.wego.service.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 public class FoodController {
     @Autowired
-    FoodServer foodServer;
+    FoodService foodService;
 
     /**
      * 根据用户的id，宠物id，食物id喂食，同时增在宠物的col
@@ -24,7 +24,7 @@ public class FoodController {
     @PostMapping("user/usefood")
     @CrossOrigin(origins = "*")
     ResultModel usefood(@RequestParam Integer uid, @RequestParam Integer pid, @RequestParam Integer fid) {
-        return foodServer.useFood(uid, pid, fid);
+        return foodService.useFood(uid, pid, fid);
     }
 
     /**
@@ -37,7 +37,7 @@ public class FoodController {
     @ResponseBody
     @CrossOrigin(origins = "*")
     ResultModel<List<Food>> showfood(Integer uid) {
-        return foodServer.showFood(uid);
+        return foodService.showFood(uid);
     }
 
     /**
@@ -49,7 +49,7 @@ public class FoodController {
     @ResponseBody
     @CrossOrigin(origins = "*")
     ResultModel<List<Food>> showMarketFood() {
-        return foodServer.getAllFood();
+        return foodService.getAllFood();
     }
 
     /**
@@ -60,7 +60,7 @@ public class FoodController {
      */
     @PostMapping("user/buyfood")
     ResultModel buyfood(@RequestParam Integer uid, @RequestParam Integer fid, @RequestParam Integer num) {
-        return foodServer.buyFood(uid, fid, num);
+        return foodService.buyFood(uid, fid, num);
     }
 
 }

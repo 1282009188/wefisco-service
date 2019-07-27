@@ -1,20 +1,16 @@
 package com.wego.service.impl;
 
 
-import com.wego.bacService.BACManager;
 import com.wego.dao.*;
 import com.wego.entity.*;
 import com.wego.model.ResultModel;
-import com.wego.service.SkinServer;
-import com.wego.service.UserServer;
-import org.fisco.bcos.BAC001;
+import com.wego.service.SkinService;
+import com.wego.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigInteger;
-
 @Service("SkinServer")
-public class SkinServerImpl implements SkinServer {
+public class SkinServiceImpl implements SkinService {
     @Autowired
     UserskinMapper userskinMapper;
     @Autowired
@@ -24,7 +20,7 @@ public class SkinServerImpl implements SkinServer {
     SkinMapper skinMapper;
 
     @Autowired
-    UserServer userServer;
+    UserService userService;
 
     @Override
     public ResultModel<Skin> showSkin(int uid) {
@@ -60,7 +56,7 @@ public class SkinServerImpl implements SkinServer {
             return resultModel;
         }
         //2.扣钱
-        resultModel = userServer.transfer(user.getName(), "wego", skin.getBean());
+        resultModel = userService.transfer(user.getName(), "wego", skin.getBean());
 
         //3. 加皮肤
         Userskin us = new Userskin();

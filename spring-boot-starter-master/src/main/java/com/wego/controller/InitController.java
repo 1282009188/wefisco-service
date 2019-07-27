@@ -1,10 +1,8 @@
 package com.wego.controller;
 
-import com.wego.bacService.BACManager;
 import com.wego.dao.UserMapper;
 import com.wego.entity.User;
 import com.wego.model.ResultModel;
-import com.wego.service.UserServer;
 import org.fisco.bcos.BAC001;
 import org.fisco.bcos.channel.client.Service;
 import org.fisco.bcos.web3j.crypto.Credentials;

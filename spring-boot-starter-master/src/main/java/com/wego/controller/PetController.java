@@ -2,7 +2,7 @@ package com.wego.controller;
 
 import com.wego.entity.Pet;
 import com.wego.model.ResultModel;
-import com.wego.service.PetServer;
+import com.wego.service.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 public class PetController {
     @Autowired
-    PetServer petServer;
+    PetService petService;
 
     /**
      * 在商城中查询所有的宠物
@@ -27,6 +27,6 @@ public class PetController {
     @GetMapping("market/pet")
     @ResponseBody
     ResultModel<HashMap<String,List<Pet>>> marketPet(){
-        return petServer.showMarketPet();
+        return petService.showMarketPet();
     }
 }

@@ -6,6 +6,6 @@ import com.wego.model.ResultModel;
 import java.util.HashMap;
 import java.util.List;
 
-public interface PetServer {
+public interface PetService {
     ResultModel<HashMap<String,List<Pet>>> showMarketPet();
 }

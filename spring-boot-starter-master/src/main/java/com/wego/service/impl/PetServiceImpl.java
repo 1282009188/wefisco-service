@@ -3,7 +3,7 @@ package com.wego.service.impl;
 import com.wego.dao.PetMapper;
 import com.wego.entity.Pet;
 import com.wego.model.ResultModel;
-import com.wego.service.PetServer;
+import com.wego.service.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Service("PetServer")
-public class PetServerImpl implements PetServer {
+public class PetServiceImpl implements PetService {
     @Autowired
     PetMapper petMapper;
 

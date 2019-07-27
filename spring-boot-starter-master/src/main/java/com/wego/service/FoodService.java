@@ -2,11 +2,10 @@ package com.wego.service;
 
 import com.wego.entity.Food;
 import com.wego.model.ResultModel;
-import com.wego.service.impl.FoodServerImpl;
 
 import java.util.List;
 
-public interface FoodServer {
+public interface FoodService {
 
     /**
      * 根据用户id去查找食物id

@@ -1,13 +1,9 @@
 package com.wego.service;
 
 import com.wego.entity.Skin;
-import com.wego.entity.User;
 import com.wego.model.ResultModel;
-import com.wego.service.impl.SkinServerImpl;
 
-import java.util.List;
-
-public interface SkinServer {
+public interface SkinService {
 
     ResultModel<Skin> showSkin(int uid);
 

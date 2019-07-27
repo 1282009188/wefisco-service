@@ -15,7 +15,7 @@ import java.util.List;
  * 主要用于对用户的操作
  */
 
-public interface UserServer {
+public interface UserService {
     //用户注册，输入密码，用户名，邮箱
 
     /**

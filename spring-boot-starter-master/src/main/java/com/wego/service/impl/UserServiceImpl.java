@@ -5,7 +5,7 @@ import com.wego.dao.*;
 import com.wego.entity.*;
 import com.wego.model.ResultModel;
 import com.wego.model.UserModel;
-import com.wego.service.UserServer;
+import com.wego.service.UserService;
 import org.fisco.bcos.BAC001;
 import org.fisco.bcos.web3j.crypto.Credentials;
 import org.fisco.bcos.web3j.crypto.EncryptType;
@@ -23,7 +23,7 @@ import java.util.Random;
  * 实现用户的逻辑
  */
 @Service("UserServer")
-public class UserServerImpl implements UserServer {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     UserMapper userMapper;

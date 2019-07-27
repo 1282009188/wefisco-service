@@ -1,12 +1,11 @@
 package com.wego.controller;
 
-import com.wego.entity.Food;
 import com.wego.entity.Skin;
 import com.wego.entity.User;
 import com.wego.model.ResultModel;
 import com.wego.model.UserModel;
-import com.wego.service.FoodServer;
-import com.wego.service.UserServer;
+import com.wego.service.FoodService;
+import com.wego.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,9 +18,9 @@ import java.util.List;
 @RestController
 public class UserController {
     @Autowired
-    UserServer userServer;
+    UserService userService;
     @Autowired
-    FoodServer foodServer;
+    FoodService foodService;
 
     /**
      * 注册
@@ -35,7 +34,7 @@ public class UserController {
     @ResponseBody
     @CrossOrigin(origins = "*")
     ResultModel<Integer> register(@RequestParam String pwd, @RequestParam String name, @RequestParam String email) {
-        return userServer.register(pwd, name, email);
+        return userService.register(pwd, name, email);
     }
 
     /**
@@ -49,7 +48,7 @@ public class UserController {
     @ResponseBody
     @CrossOrigin(origins = "*")
     ResultModel login(@RequestParam String name, @RequestParam String pwd) {
-        return userServer.login(name, pwd);
+        return userService.login(name, pwd);
     }
 
     /***
@@ -60,7 +59,7 @@ public class UserController {
     @ResponseBody
     @CrossOrigin(origins = "*")
     ResultModel<User> viewInfo(Integer uid) {
-        return userServer.showInfo(uid);
+        return userService.showInfo(uid);
     }
 
 
@@ -68,7 +67,7 @@ public class UserController {
     @ResponseBody
     @CrossOrigin(origins = "*")
     ResultModel<List<Skin>> showskin(Integer uid) {
-        return userServer.showSkin(uid);
+        return userService.showSkin(uid);
     }
 
     /**
@@ -81,7 +80,7 @@ public class UserController {
     @ResponseBody
     @CrossOrigin(origins = "*")
     ResultModel<UserModel> showImage(Integer uid) {
-        return userServer.getImage(uid);
+        return userService.getImage(uid);
     }
 
 }

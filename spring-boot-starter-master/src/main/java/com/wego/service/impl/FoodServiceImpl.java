@@ -1,25 +1,21 @@
 package com.wego.service.impl;
 
-import com.wego.bacService.BACManager;
 import com.wego.dao.*;
 import com.wego.entity.*;
 import com.wego.entity.Food;
 import com.wego.entity.UserPet;
 import com.wego.entity.Userfood;
 import com.wego.model.ResultModel;
-import com.wego.service.FoodServer;
-import com.wego.service.UserServer;
-import org.fisco.bcos.BAC001;
+import com.wego.service.FoodService;
+import com.wego.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service("FoodServer")
-public class FoodServerImpl implements FoodServer {
+public class FoodServiceImpl implements FoodService {
     @Autowired
     UserMapper userMapper;
     @Autowired
@@ -34,7 +30,7 @@ public class FoodServerImpl implements FoodServer {
     UserPetMapper petMapper;
 
     @Autowired
-    UserServer userServer;
+    UserService userService;
 
     /**
      * 查询该用户有多少食物
@@ -138,7 +134,7 @@ public class FoodServerImpl implements FoodServer {
         User user = userMapper.selectByPrimaryKey(uid);
         Food food = foodMapper.selectByPrimaryKey(fid);
         int price = food.getBean() * num;
-        ResultModel resultModel = userServer.transfer(user.getName(),"wego",price);
+        ResultModel resultModel = userService.transfer(user.getName(),"wego",price);
         //2.加食物
         Userfood uf = userfoodMapper.selectByUidAndFid(uid, fid);
         if (uf == null) {
