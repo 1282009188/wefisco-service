@@ -88,7 +88,7 @@ public class UserServiceImpl implements UserService {
         user.setLevel(0);
         userMapper.insert(user);
 
-        if(userpetMapper.selectByUid(user.getUid())==null) {
+        if(userpetMapper.selectByUid(user.getUid()).size()==0) {
             //随机为用户分配一个企鹅
             Pet pet = petMapper.selectByPrimaryKey(1);
             //插入企鹅数据到userpet表中
