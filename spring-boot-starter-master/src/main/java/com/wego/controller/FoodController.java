@@ -22,6 +22,7 @@ public class FoodController {
      * @return
      */
     @PostMapping("user/usefood")
+    @CrossOrigin(origins = "*")
     ResultModel usefood(@RequestParam Integer uid, @RequestParam Integer pid, @RequestParam Integer fid) {
         return foodServer.useFood(uid, pid, fid);
     }
@@ -34,6 +35,7 @@ public class FoodController {
      */
     @GetMapping("user/showfood")
     @ResponseBody
+    @CrossOrigin(origins = "*")
     ResultModel<List<Food>> showfood(Integer uid) {
         return foodServer.showFood(uid);
     }
@@ -45,6 +47,7 @@ public class FoodController {
      */
     @GetMapping("market/food")
     @ResponseBody
+    @CrossOrigin(origins = "*")
     ResultModel<List<Food>> showMarketFood() {
         return foodServer.getAllFood();
     }

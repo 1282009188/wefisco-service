@@ -33,6 +33,7 @@ public class UserController {
      */
     @PostMapping("user/register")
     @ResponseBody
+    @CrossOrigin(origins = "*")
     ResultModel<Integer> register(@RequestParam String pwd, @RequestParam String name, @RequestParam String email) {
         return userServer.register(pwd, name, email);
     }
@@ -46,6 +47,7 @@ public class UserController {
      */
     @PostMapping("user/login")
     @ResponseBody
+    @CrossOrigin(origins = "*")
     ResultModel login(@RequestParam String name, @RequestParam String pwd) {
         return userServer.login(name, pwd);
     }
@@ -56,6 +58,7 @@ public class UserController {
      */
     @GetMapping("user/viewinfo")
     @ResponseBody
+    @CrossOrigin(origins = "*")
     ResultModel<User> viewInfo(Integer uid) {
         return userServer.showInfo(uid);
     }
@@ -63,6 +66,7 @@ public class UserController {
 
     @GetMapping("user/showskin")
     @ResponseBody
+    @CrossOrigin(origins = "*")
     ResultModel<List<Skin>> showskin(Integer uid) {
         return userServer.showSkin(uid);
     }
@@ -75,6 +79,7 @@ public class UserController {
      */
     @GetMapping("user/showimage")
     @ResponseBody
+    @CrossOrigin(origins = "*")
     ResultModel<UserModel> showImage(Integer uid) {
         return userServer.getImage(uid);
     }

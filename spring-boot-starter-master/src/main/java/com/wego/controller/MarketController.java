@@ -1,5 +1,6 @@
 package com.wego.controller;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 用于操作商城的接口
  */
 @RestController
+@CrossOrigin(origins = "*")
 public class MarketController {
 
 }

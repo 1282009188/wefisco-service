@@ -15,10 +15,7 @@ import org.fisco.bcos.web3j.tx.gas.StaticGasProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
 
@@ -29,6 +26,7 @@ public class InitController {
     UserMapper userMapper;
 
     @RequestMapping("/deploy")
+    @CrossOrigin(origins = "*")
     ResultModel deploy() throws Exception {
         BigInteger gasPrice = new BigInteger("1");
         BigInteger gasLimit = new BigInteger("2100000000");
