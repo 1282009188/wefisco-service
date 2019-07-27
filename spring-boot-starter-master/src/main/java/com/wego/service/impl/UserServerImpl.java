@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author elizayuan
@@ -35,9 +36,11 @@ public class UserServerImpl implements UserServer {
     @Autowired
     SkinMapper skinMapper;
     @Autowired
-    PetMapper petMapper;
+    UserPetMapper userpetMapper;
     @Autowired
     PetSkinMapper petSkinMapper;
+    @Autowired
+    PetMapper petMapper;
 
     /**
      * 用户注册，会自动生成私钥和密钥
@@ -81,6 +84,20 @@ public class UserServerImpl implements UserServer {
         user.setBean(0);
         user.setLevel(0);
         userMapper.insert(user);
+
+        //随机为用户分配一个企鹅
+        List<Pet> list = petMapper.selectAll();
+        Random random = new Random();
+        Pet pet = list.get(random.nextInt(list.size()));
+        //插入企鹅数据到userpet表中
+        UserPet userPet = new UserPet();
+        userPet.setCol(0);
+        userPet.setPid(pet.getPid());
+        userPet.setPname(pet.getName());
+        userPet.setUrl(pet.getUrl());
+        userPet.setUid(user.getUid());
+        userpetMapper.insert(userPet);
+
         resultModel.setCode(0);
         resultModel.setMessage("注册成功");
         return resultModel;
@@ -239,18 +256,20 @@ public class UserServerImpl implements UserServer {
         userModel.setLevel(user.getLevel());
         userModel.setBean(user.getBean());
 
-        //去查找用户的id去查找宠物信息
-        Pet pet = petMapper.selectByUid(uid);
+        //去查找用户的id去查找宠物信息,目前只能有一只
+        UserPet pet = userpetMapper.selectByUid(uid);
         if (pet == null) {
             resultModel.setCode(1);
             resultModel.setMessage("宠物为空");
             return resultModel;
         }
-        //查找穿戴的皮肤
+        //查找已经穿戴好的皮肤
         Userskin userskin = userskinMapper.selectByUidUseSkin(uid);
         userModel.setUrl(pet.getUrl());
         userModel.setPetname(pet.getPname());
+        userModel.setPid(pet.getPid());
         if (userskin == null) {
+            userModel.setPid(pet.getPid());
             userModel.setUrl(pet.getUrl());
         } else {
 

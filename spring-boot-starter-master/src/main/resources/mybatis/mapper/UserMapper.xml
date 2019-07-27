@@ -17,7 +17,7 @@
     delete from user
     where uid = #{uid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.wego.entity.User" >
+  <insert id="insert" useGeneratedKeys="true" keyProperty="uid" parameterType="com.wego.entity.User" >
     insert into user (uid, name,
       pwd, bean, addr, sk, 
       pk, email, level)
