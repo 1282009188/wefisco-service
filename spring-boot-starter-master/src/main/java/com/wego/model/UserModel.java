@@ -15,6 +15,16 @@ public class UserModel {
     private String petname;
     //企鹅皮肤
     private String url;
+    //宠物id
+    private int pid;
+
+    public int getPid() {
+        return pid;
+    }
+
+    public void setPid(int pid) {
+        this.pid = pid;
+    }
 
     public int getLevel() {
         return level;

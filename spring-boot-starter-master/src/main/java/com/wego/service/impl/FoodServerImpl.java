@@ -3,6 +3,9 @@ package com.wego.service.impl;
 import com.wego.bacService.BACManager;
 import com.wego.dao.*;
 import com.wego.entity.*;
+import com.wego.entity.Food;
+import com.wego.entity.UserPet;
+import com.wego.entity.Userfood;
 import com.wego.model.ResultModel;
 import com.wego.service.FoodServer;
 import com.wego.service.UserServer;
@@ -28,7 +31,7 @@ public class FoodServerImpl implements FoodServer {
     @Autowired
     SkinMapper skinMapper;
     @Autowired
-    PetMapper petMapper;
+    UserPetMapper petMapper;
 
     @Autowired
     UserServer userServer;
@@ -93,7 +96,7 @@ public class FoodServerImpl implements FoodServer {
         Food food = foodMapper.selectByPrimaryKey(fid);
         int col = food.getCol();
         //修改宠物的col
-        Pet pet = petMapper.selectByPrimaryKey(pid);
+        UserPet pet = petMapper.selectByPrimaryKey(pid);
         if (pet == null) {
             resultModel.setCode(1);
             resultModel.setMessage("宠物不存在");

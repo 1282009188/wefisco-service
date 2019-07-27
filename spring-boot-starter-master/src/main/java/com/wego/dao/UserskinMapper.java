@@ -25,7 +25,7 @@ public interface UserskinMapper {
     Userskin selectByUidSid(@Param("uid") Integer uid,@Param("sid") Integer sid);
 
     /**
-     * 根据用户的id去查找穿戴的
+     * 根据用户的id去查找穿戴的皮肤
      */
     Userskin selectByUidUseSkin(Integer uid);
 

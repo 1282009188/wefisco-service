@@ -1,4 +1,4 @@
 package com.wego.service;
 
-public class PetServer {
+public class UserPetServer {
 }

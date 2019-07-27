@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wego.dao.UserPetMapper" >
+  <resultMap id="BaseResultMap" type="com.wego.entity.UserPet" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <id column="pid" property="pid" jdbcType="INTEGER" />
+    <result column="pname" property="pname" jdbcType="VARCHAR" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="col" property="col" jdbcType="INTEGER" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from userpet
+    where pid = #{pid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wego.entity.UserPet" >
+    insert into userpet (pid, pname, uid, col,url)
+    values (#{pid,jdbcType=INTEGER}, #{pname,jdbcType=VARCHAR}, #{uid,jdbcType=INTEGER}, 
+       #{col,jdbcType=INTEGER},#{url,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.wego.entity.UserPet" >
+    update userpet
+    set pname = #{pname,jdbcType=VARCHAR},
+      uid = #{uid,jdbcType=INTEGER},
+      col = #{col,jdbcType=INTEGER}
+    where pid = #{pid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select pid, pname, uid, col,url
+    from userpet
+    where pid = #{pid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select pid, pname, uid, col,url
+    from userpet
+  </select>
+  <update id="updateColByPrimaryKey" >
+    update userpet
+    set
+      col = #{param2,jdbcType=INTEGER}
+    where pid = #{param1,jdbcType=INTEGER}
+  </update>
+  <select id="selectByUid" resultMap="BaseResultMap" >
+    select pid, pname, uid, col,url
+    from userpet where uid=#{uid}
+  </select>
+</mapper>

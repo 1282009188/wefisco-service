@@ -1,35 +1,36 @@
 package com.wego.entity;
 
+/**
+ * @author elizayuan
+ *
+ */
 public class PetSkin {
-    private Integer id;
-
-    private Integer pid;
-
-    private Integer sid;
-
+    private int id;
+    private int pid;
+    private int sid;
     private String url;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Integer getPid() {
+    public int getPid() {
         return pid;
     }
 
-    public void setPid(Integer pid) {
+    public void setPid(int pid) {
         this.pid = pid;
     }
 
-    public Integer getSid() {
+    public int getSid() {
         return sid;
     }
 
-    public void setSid(Integer sid) {
+    public void setSid(int sid) {
         this.sid = sid;
     }
 
