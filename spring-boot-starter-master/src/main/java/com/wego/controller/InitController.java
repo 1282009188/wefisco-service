@@ -42,7 +42,7 @@ public class InitController {
         Web3j web3j = Web3j.build(channelEthereumService, service.getGroupId());
         User wego = userMapper.selectByName("wego");
         //wego发行资产
-        BAC001 bac001 = BAC001.deploy(web3j, Credentials.create(wego.getSk()), contractGasProvider, "健康豆资产发布", "health bean", BigInteger.valueOf(1), BigInteger.valueOf(10000)).send();
+        BAC001 bac001 = BAC001.deploy(web3j, Credentials.create(wego.getSk()), contractGasProvider, "健康豆资产发布", "health bean", BigInteger.valueOf(1), BigInteger.valueOf(1000000000)).send();
         wego.setBean(bac001.balance(wego.getAddr()).send().intValue());
         userMapper.updateByPrimaryKey(wego);
         ResultModel model = new ResultModel();
