@@ -104,7 +104,7 @@ public class UserServiceImpl implements UserService {
             user = userMapper.selectByName(name);
             User wego = userMapper.selectByName("wego");
             BAC002 bac002 = BACManager.getBAC002(wego);
-            bac002.issueWithAssetURI(user.getAddr(), BigInteger.valueOf(userPet.getId()),
+            bac002.issueWithAssetURI(user.getAddr(), BigInteger.valueOf(user.getUid()),
                     "this is a pet information url is www."
                             + pet.getName() + ".com",
                     (user.getName() + "get a pet").getBytes()).send();
@@ -308,6 +308,12 @@ public class UserServiceImpl implements UserService {
             return resultModel;
         }
         User user = userMapper.selectByPrimaryKey(uid);
+        System.out.println("---------------------------------");
+        System.out.println("---------------------------------");
+        System.out.println("---------------------------------");
+        System.out.println("UserServiceImpl.getImage");
+        System.out.println("getImage"+user);
+        System.out.println(user.getLevel());
         userModel.setLevel(user.getLevel());
         userModel.setBean(user.getBean());
 
